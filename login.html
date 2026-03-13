@@ -1,0 +1,3894 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wollongong Health</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,700&family=DM+Sans:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --navy: #012169;
+            --navy2: #1a3a8a;
+            --navy3: #001144;
+            --red: #E4002B;
+            --red2: #FF3355;
+            --red3: #B8001F;
+            --bg: #F4F6FB;
+            --ww: #FAFBFF;
+            --sand: #D5DAE8;
+            --dark: #0A0E1E;
+            --mid: #3A4060;
+            --muted: #7A80A0;
+            --cs: 0 2px 20px rgba(1, 33, 105, .08), 0 1px 4px rgba(1, 33, 105, .04);
+            --hs: 0 8px 36px rgba(1, 33, 105, .14), 0 2px 8px rgba(1, 33, 105, .06);
+            --sw: 260px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--dark);
+            min-height: 100vh;
+            overflow-x: hidden
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: var(--sw);
+            background: var(--navy);
+            display: flex;
+            flex-direction: column;
+            z-index: 200;
+            transition: transform .3s ease;
+            overflow: hidden
+        }
+
+        .sidebar::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            right: -60px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .04);
+            pointer-events: none
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(1, 33, 105, .5);
+            z-index: 190;
+            backdrop-filter: blur(2px)
+        }
+
+        .logo {
+            padding: 22px 18px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, .1)
+        }
+
+        .logo-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 3px
+        }
+
+        .logo-icon {
+            width: 30px;
+            height: 30px;
+            background: var(--navy);
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            flex-shrink: 0
+        }
+
+        .logo-name {
+            font-family: 'Fraunces', serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -.3px
+        }
+
+        .logo-tag {
+            font-size: 10px;
+            color: rgba(255, 255, 255, .4);
+            letter-spacing: .5px;
+            text-transform: uppercase;
+            padding-left: 44px
+        }
+
+        .nav {
+            flex: 1;
+            padding: 14px 10px;
+            overflow-y: auto
+        }
+
+        .nav-lbl {
+            font-size: 10px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, .28);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 7px 12px 4px
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 13px;
+            border-radius: 9px;
+            cursor: pointer;
+            transition: all .18s;
+            color: rgba(255, 255, 255, .6);
+            font-size: 14px;
+            margin-bottom: 2px;
+            user-select: none
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, .1);
+            color: #fff
+        }
+
+        .nav-item.active {
+            background: rgba(255, 255, 255, .15);
+            color: #fff;
+            font-weight: 500
+        }
+
+        .nav-item .ni {
+            font-size: 15px;
+            width: 19px;
+            text-align: center;
+            flex-shrink: 0
+        }
+
+        .badge {
+            margin-left: auto;
+            background: var(--red);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 20px
+        }
+
+        .sidebar-foot {
+            padding: 13px;
+            border-top: 1px solid rgba(255, 255, 255, .1)
+        }
+
+        .user-card {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 9px 11px;
+            background: rgba(255, 255, 255, .08);
+            border-radius: 9px;
+            cursor: pointer;
+            transition: background .2s
+        }
+
+        .user-card:hover {
+            background: rgba(255, 255, 255, .13)
+        }
+
+        .ava {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--red), #FF6685);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: #fff;
+            flex-shrink: 0
+        }
+
+        .uname {
+            font-size: 13px;
+            font-weight: 500;
+            color: #fff
+        }
+
+        .urole {
+            font-size: 11px;
+            color: rgba(255, 255, 255, .4)
+        }
+
+        /* MAIN */
+        .main {
+            margin-left: var(--sw);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: margin-left .3s
+        }
+
+        /* TOPBAR */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(244, 246, 251, .94);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--sand);
+            padding: 13px 26px;
+            display: flex;
+            align-items: center;
+            gap: 12px
+        }
+
+        .hamburger {
+            display: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 9px;
+            border: 1.5px solid var(--sand);
+            background: transparent;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 4px;
+            flex-shrink: 0
+        }
+
+        .hamburger span {
+            width: 17px;
+            height: 2px;
+            background: var(--mid);
+            border-radius: 2px
+        }
+
+        .tb-title {
+            font-family: 'Fraunces', serif;
+            font-size: 19px;
+            font-weight: 500;
+            color: var(--dark);
+            flex: 1
+        }
+
+        .tb-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        /* BUTTONS */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 15px;
+            border-radius: 9px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all .18s;
+            white-space: nowrap
+        }
+
+        .btn-p {
+            background: var(--navy);
+            color: #fff
+        }
+
+        .btn-p:hover {
+            background: var(--navy2);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(1, 33, 105, .3)
+        }
+
+        .btn-o {
+            background: transparent;
+            color: var(--mid);
+            border: 1.5px solid var(--sand)
+        }
+
+        .btn-o:hover {
+            background: var(--sand);
+            color: var(--dark)
+        }
+
+        .btn-ico {
+            width: 36px;
+            height: 36px;
+            padding: 0;
+            justify-content: center;
+            background: transparent;
+            border: 1.5px solid var(--sand);
+            color: var(--mid);
+            font-size: 15px;
+            border-radius: 9px
+        }
+
+        .btn-ico:hover {
+            background: var(--sand)
+        }
+
+        /* CONTENT */
+        .content {
+            flex: 1;
+            padding: 26px
+        }
+
+        .page {
+            display: none
+        }
+
+        .page.active {
+            display: block
+        }
+
+        @keyframes fu {
+            from {
+                opacity: 0;
+                transform: translateY(13px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        .page.active>* {
+            animation: fu .3s ease forwards
+        }
+
+        .page.active>*:nth-child(2) {
+            animation-delay: .05s
+        }
+
+        .page.active>*:nth-child(3) {
+            animation-delay: .1s
+        }
+
+        /* EMERGENCY */
+        .ebar {
+            background: linear-gradient(90deg, var(--red3), var(--red));
+            color: #fff;
+            padding: 9px 26px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer
+        }
+
+        .ebar:hover {
+            background: linear-gradient(90deg, #8B000F, var(--red3))
+        }
+
+        .epulse {
+            width: 7px;
+            height: 7px;
+            background: #fff;
+            border-radius: 50%;
+            flex-shrink: 0;
+            animation: p 1.4s infinite
+        }
+
+        @keyframes p {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1)
+            }
+
+            50% {
+                opacity: .35;
+                transform: scale(.7)
+            }
+        }
+
+        /* DASHBOARD */
+        .wbanner {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 100%);
+            border-radius: 16px;
+            padding: 26px 28px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden
+        }
+
+        .wbanner::after {
+            content: '🌐';
+            position: absolute;
+            right: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 68px;
+            opacity: .1;
+            pointer-events: none
+        }
+
+        .wbanner h2 {
+            font-family: 'Fraunces', serif;
+            font-size: 24px;
+            font-weight: 500;
+            color: #fff;
+            margin-bottom: 5px
+        }
+
+        .wbanner p {
+            color: rgba(255, 255, 255, .6);
+            font-size: 14px;
+            max-width: 480px;
+            line-height: 1.55
+        }
+
+        .srow {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 20px
+        }
+
+        .scard {
+            background: var(--ww);
+            border-radius: 13px;
+            padding: 17px 18px;
+            box-shadow: var(--cs);
+            border: 1px solid rgba(213, 218, 232, .7);
+            transition: all .2s
+        }
+
+        .scard:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--hs)
+        }
+
+        .slbl {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            margin-bottom: 6px
+        }
+
+        .sval {
+            font-family: 'Fraunces', serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--navy);
+            line-height: 1;
+            margin-bottom: 3px
+        }
+
+        .ssub {
+            font-size: 12px;
+            color: var(--muted)
+        }
+
+        .sdot {
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            margin-right: 4px
+        }
+
+        .g2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 20px
+        }
+
+        .g3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px
+        }
+
+        .card {
+            background: var(--ww);
+            border-radius: 13px;
+            padding: 20px;
+            box-shadow: var(--cs);
+            border: 1px solid rgba(213, 218, 232, .7)
+        }
+
+        .ch {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px
+        }
+
+        .ct {
+            font-family: 'Fraunces', serif;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--dark)
+        }
+
+        .ca {
+            font-size: 12px;
+            color: var(--red);
+            cursor: pointer;
+            font-weight: 500
+        }
+
+        /* TASK */
+        .ti {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--sand)
+        }
+
+        .ti:last-child {
+            border-bottom: none
+        }
+
+        .tck {
+            width: 19px;
+            height: 19px;
+            border-radius: 5px;
+            border: 2px solid var(--sand);
+            flex-shrink: 0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all .18s;
+            margin-top: 1px
+        }
+
+        .tck.done {
+            background: var(--navy);
+            border-color: var(--navy);
+            color: #fff;
+            font-size: 11px
+        }
+
+        .tt {
+            flex: 1;
+            min-width: 0
+        }
+
+        .tn {
+            font-size: 14px;
+            color: var(--dark);
+            font-weight: 400;
+            line-height: 1.4
+        }
+
+        .tn.done {
+            text-decoration: line-through;
+            color: var(--muted)
+        }
+
+        .tm {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 2px
+        }
+
+        .tp {
+            font-size: 10px;
+            font-weight: 600;
+            padding: 2px 7px;
+            border-radius: 20px;
+            flex-shrink: 0
+        }
+
+        .ph {
+            background: #FFE8EC;
+            color: var(--red3)
+        }
+
+        .pm {
+            background: #FEF3CD;
+            color: #B8860B
+        }
+
+        .pl {
+            background: #E8EDF8;
+            color: var(--navy)
+        }
+
+        /* APPT */
+        .ai {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            padding: 10px 12px;
+            background: var(--bg);
+            border-radius: 10px;
+            margin-bottom: 7px;
+            border-left: 3px solid var(--navy);
+            transition: all .18s
+        }
+
+        .ai:hover {
+            transform: translateX(3px)
+        }
+
+        .ai.r {
+            border-left-color: var(--red)
+        }
+
+        .ai.g {
+            border-left-color: #C9962E
+        }
+
+        .atm {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--muted);
+            min-width: 46px;
+            flex-shrink: 0
+        }
+
+        .atl {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--dark)
+        }
+
+        .asb {
+            font-size: 12px;
+            color: var(--muted)
+        }
+
+        .atg {
+            margin-left: auto;
+            font-size: 11px;
+            padding: 3px 9px;
+            border-radius: 20px;
+            font-weight: 500;
+            background: #E8EDF8;
+            color: var(--navy);
+            flex-shrink: 0
+        }
+
+        /* QUICK */
+        .qc {
+            background: var(--ww);
+            border-radius: 13px;
+            padding: 18px;
+            box-shadow: var(--cs);
+            border: 1px solid rgba(213, 218, 232, .7);
+            cursor: pointer;
+            transition: all .2s;
+            display: flex;
+            flex-direction: column;
+            gap: 8px
+        }
+
+        .qc:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--hs)
+        }
+
+        .qi {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px
+        }
+
+        .qn {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--dark)
+        }
+
+        .qd {
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.5
+        }
+
+        /* SECTION HDR */
+        .sh {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+            gap: 8px
+        }
+
+        .stl {
+            font-family: 'Fraunces', serif;
+            font-size: 19px;
+            font-weight: 500;
+            color: var(--dark)
+        }
+
+        /* PLANS */
+        .pc {
+            background: var(--ww);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--cs);
+            border: 1px solid rgba(213, 218, 232, .7);
+            margin-bottom: 12px;
+            transition: all .2s;
+            cursor: pointer
+        }
+
+        .pc:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--hs)
+        }
+
+        .pch {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            flex-wrap: wrap
+        }
+
+        .pav {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0
+        }
+
+        .pn {
+            font-family: 'Fraunces', serif;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--dark)
+        }
+
+        .pty {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 2px
+        }
+
+        .ps {
+            margin-left: auto;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 3px 11px;
+            border-radius: 20px
+        }
+
+        .sa {
+            background: #E8EDF8;
+            color: var(--navy)
+        }
+
+        .sr {
+            background: #FEF3CD;
+            color: #B8860B
+        }
+
+        .sp {
+            background: #FFE8EC;
+            color: var(--red3)
+        }
+
+        .pgs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 12px
+        }
+
+        .gt {
+            font-size: 12px;
+            padding: 3px 9px;
+            background: var(--bg);
+            border-radius: 5px;
+            color: var(--mid);
+            border: 1px solid var(--sand)
+        }
+
+        .ppr {
+            display: flex;
+            gap: 16px
+        }
+
+        .pri {
+            flex: 1;
+            min-width: 50px
+        }
+
+        .prl {
+            font-size: 11px;
+            color: var(--muted);
+            margin-bottom: 4px
+        }
+
+        .prb {
+            height: 5px;
+            background: var(--sand);
+            border-radius: 3px;
+            overflow: hidden
+        }
+
+        .prf {
+            height: 100%;
+            border-radius: 3px;
+            transition: width .5s ease
+        }
+
+        /* RESOURCES */
+        .rg {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px
+        }
+
+        .rc {
+            background: var(--ww);
+            border-radius: 13px;
+            overflow: hidden;
+            box-shadow: var(--cs);
+            border: 1px solid rgba(213, 218, 232, .7);
+            cursor: pointer;
+            transition: all .2s
+        }
+
+        .rc:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--hs)
+        }
+
+        .rth {
+            height: 78px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 38px
+        }
+
+        .rb {
+            padding: 13px
+        }
+
+        .rcat {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .8px;
+            color: var(--red);
+            margin-bottom: 4px
+        }
+
+        .rtl {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 3px;
+            line-height: 1.3
+        }
+
+        .rdc {
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.5
+        }
+
+        /* COMM */
+        .cg {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px
+        }
+
+        .ctool {
+            background: var(--ww);
+            border-radius: 13px;
+            padding: 20px;
+            box-shadow: var(--cs);
+            border: 1px solid rgba(213, 218, 232, .7);
+            cursor: pointer;
+            transition: all .2s
+        }
+
+        .ctool:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--hs)
+        }
+
+        .cico {
+            font-size: 32px;
+            margin-bottom: 10px
+        }
+
+        .ctit {
+            font-family: 'Fraunces', serif;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--dark);
+            margin-bottom: 5px
+        }
+
+        .cdsc {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.6;
+            margin-bottom: 13px
+        }
+
+        /* AAC */
+        .aacb {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 7px;
+            margin-bottom: 13px
+        }
+
+        .aacbtn {
+            background: var(--bg);
+            border: 2px solid var(--sand);
+            border-radius: 10px;
+            padding: 10px 5px;
+            text-align: center;
+            cursor: pointer;
+            transition: all .18s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            user-select: none
+        }
+
+        .aacbtn:hover {
+            border-color: var(--navy);
+            background: #ECF0FA;
+            transform: scale(1.04)
+        }
+
+        .aacbtn:active {
+            transform: scale(.95)
+        }
+
+        .aacico {
+            font-size: 21px
+        }
+
+        .aacw {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--mid)
+        }
+
+        .aacout {
+            background: var(--bg);
+            border: 2px solid var(--sand);
+            border-radius: 10px;
+            padding: 12px 14px;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--dark);
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            gap: 7px
+        }
+
+        .aacout .ph2 {
+            color: var(--muted);
+            font-weight: 400;
+            font-style: italic
+        }
+
+        .brand-name {
+            color: white;
+        }
+
+        .brand-tag {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+
+        }
+
+        /* MODAL */
+        .mo,
+        .amo {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(1, 33, 105, .45);
+            backdrop-filter: blur(4px);
+            z-index: 300;
+            align-items: center;
+            justify-content: center;
+            padding: 14px
+        }
+
+        .mo.open,
+        .amo.open {
+            display: flex
+        }
+
+        .modal,
+        .amodal {
+            background: var(--ww);
+            border-radius: 16px;
+            padding: 26px;
+            width: 510px;
+            max-width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 24px 80px rgba(1, 33, 105, .2)
+        }
+
+        .mtit {
+            font-family: 'Fraunces', serif;
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 4px;
+            color: var(--dark)
+        }
+
+        .msub {
+            font-size: 13px;
+            color: var(--muted);
+            margin-bottom: 20px
+        }
+
+        .fg {
+            margin-bottom: 13px
+        }
+
+        .fl {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--mid);
+            margin-bottom: 5px;
+            display: block
+        }
+
+        .fi {
+            width: 100%;
+            padding: 9px 12px;
+            border: 1.5px solid var(--sand);
+            border-radius: 8px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            background: var(--bg);
+            color: var(--dark);
+            transition: border-color .18s;
+            outline: none
+        }
+
+        .fi:focus {
+            border-color: var(--navy)
+        }
+
+        .fsel {
+            width: 100%;
+            padding: 9px 12px;
+            border: 1.5px solid var(--sand);
+            border-radius: 8px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            background: var(--bg);
+            color: var(--dark);
+            outline: none;
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237A80A0' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center
+        }
+
+        .mf {
+            display: flex;
+            gap: 9px;
+            justify-content: flex-end;
+            margin-top: 20px;
+            flex-wrap: wrap
+        }
+
+        /* TOAST */
+        .toast {
+            position: fixed;
+            bottom: 22px;
+            right: 22px;
+            background: var(--navy3);
+            color: #fff;
+            padding: 12px 17px;
+            border-radius: 10px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            box-shadow: 0 8px 30px rgba(1, 33, 105, .25);
+            z-index: 400;
+            transform: translateY(80px);
+            opacity: 0;
+            transition: all .3s cubic-bezier(.34, 1.56, .64, 1);
+            max-width: calc(100vw - 44px)
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1
+        }
+
+        /* SEARCH */
+        .sw {
+            position: relative
+        }
+
+        .si {
+            padding: 8px 12px 8px 34px;
+            border: 1.5px solid var(--sand);
+            border-radius: 8px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            background: var(--bg);
+            color: var(--dark);
+            outline: none;
+            width: 190px;
+            transition: border-color .2s, width .2s
+        }
+
+        .si:focus {
+            border-color: var(--navy);
+            width: 230px
+        }
+
+        .sico {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted);
+            font-size: 13px
+        }
+
+        /* CALENDAR */
+        .cvtog {
+            display: flex;
+            background: var(--sand);
+            border-radius: 9px;
+            padding: 3px;
+            gap: 2px
+        }
+
+        .cvbtn {
+            padding: 5px 12px;
+            border-radius: 7px;
+            border: none;
+            background: transparent;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--mid);
+            cursor: pointer;
+            transition: all .18s
+        }
+
+        .cvbtn.active {
+            background: var(--ww);
+            color: var(--dark);
+            box-shadow: 0 1px 5px rgba(1, 33, 105, .1)
+        }
+
+        .gcbtn {
+            display: flex;
+            align-items: center;
+            gap: 6px
+        }
+
+        .cshell {
+            background: var(--ww);
+            border-radius: 15px;
+            box-shadow: var(--cs);
+            border: 1px solid rgba(213, 218, 232, .7);
+            overflow: hidden;
+            margin-bottom: 16px
+        }
+
+        .chdr {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--sand);
+            background: var(--bg);
+            flex-wrap: wrap;
+            gap: 9px
+        }
+
+        .cmlbl {
+            font-family: 'Fraunces', serif;
+            font-size: 17px;
+            font-weight: 500;
+            color: var(--dark);
+            min-width: 160px;
+            text-align: center
+        }
+
+        .cnav {
+            width: 30px;
+            height: 30px;
+            border-radius: 7px;
+            border: 1.5px solid var(--sand);
+            background: transparent;
+            font-size: 17px;
+            cursor: pointer;
+            color: var(--mid);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all .14s;
+            line-height: 1
+        }
+
+        .cnav:hover {
+            background: var(--sand);
+            color: var(--dark)
+        }
+
+        .ctbtn {
+            padding: 4px 11px;
+            border-radius: 7px;
+            border: 1.5px solid var(--sand);
+            background: transparent;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--mid);
+            cursor: pointer;
+            transition: all .14s
+        }
+
+        .ctbtn:hover {
+            background: var(--sand)
+        }
+
+        .cleg {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            font-size: 12px;
+            color: var(--muted);
+            flex-wrap: wrap
+        }
+
+        .ldot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 3px
+        }
+
+        .cdowr {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            border-bottom: 1px solid var(--sand)
+        }
+
+        .cdow {
+            text-align: center;
+            padding: 8px 0;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: .5px
+        }
+
+        .cgrid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr)
+        }
+
+        .ccell {
+            min-height: 84px;
+            border-right: 1px solid var(--sand);
+            border-bottom: 1px solid var(--sand);
+            padding: 6px 4px 4px;
+            cursor: pointer;
+            transition: background .12s;
+            position: relative
+        }
+
+        .ccell:nth-child(7n) {
+            border-right: none
+        }
+
+        .ccell:hover {
+            background: #ECF0FA
+        }
+
+        .ccell.om {
+            background: var(--bg);
+            opacity: .5
+        }
+
+        .ccell.today .cdn {
+            background: var(--red);
+            color: #fff;
+            border-radius: 50%;
+            width: 23px;
+            height: 23px;
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+        .brand-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo {
+            width: 48px;
+        }
+
+        .ccell.sel {
+            background: #E8EDF8
+        }
+
+        .cdn {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--dark);
+            width: 23px;
+            height: 23px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 3px
+        }
+
+        .ccell.om .cdn {
+            color: var(--muted)
+        }
+
+        .ccell.wknd .cdn {
+            color: var(--red)
+        }
+
+        .cev {
+            font-size: 10px;
+            font-weight: 500;
+            padding: 2px 4px;
+            border-radius: 3px;
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            cursor: pointer;
+            transition: opacity .12s
+        }
+
+        .cev:hover {
+            opacity: .78
+        }
+
+        .cmor {
+            font-size: 10px;
+            color: var(--muted);
+            padding: 1px 3px;
+            cursor: pointer
+        }
+
+        .wgrid {
+            display: grid;
+            grid-template-columns: 48px repeat(7, 1fr);
+            min-height: 480px;
+            overflow-x: auto
+        }
+
+        .wtc {
+            border-right: 1px solid var(--sand)
+        }
+
+        .wts {
+            height: 50px;
+            border-bottom: 1px solid var(--sand);
+            padding: 3px 5px 0;
+            font-size: 10px;
+            color: var(--muted);
+            text-align: right
+        }
+
+        .wdc {
+            border-right: 1px solid var(--sand);
+            position: relative;
+            min-width: 72px
+        }
+
+        .wdc:last-child {
+            border-right: none
+        }
+
+        .wdh {
+            padding: 8px 5px;
+            text-align: center;
+            border-bottom: 1px solid var(--sand);
+            background: var(--bg)
+        }
+
+        .wdn2 {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--muted);
+            text-transform: uppercase
+        }
+
+        .wdn {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--dark);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 2px auto 0
+        }
+
+        .wdn.today {
+            background: var(--red);
+            color: #fff
+        }
+
+        .whr {
+            height: 50px;
+            border-bottom: 1px solid rgba(213, 218, 232, .5);
+            position: relative;
+            cursor: pointer;
+            transition: background .1s
+        }
+
+        .whr:hover {
+            background: #ECF0FA
+        }
+
+        .wev {
+            position: absolute;
+            left: 2px;
+            right: 2px;
+            border-radius: 5px;
+            padding: 2px 4px;
+            font-size: 10px;
+            font-weight: 500;
+            overflow: hidden;
+            cursor: pointer;
+            z-index: 1
+        }
+
+        .wev:hover {
+            opacity: .82
+        }
+
+        .dvw {
+            display: grid;
+            grid-template-columns: 48px 1fr;
+            min-height: 480px
+        }
+
+        .dtc {
+            border-right: 1px solid var(--sand)
+        }
+
+        .dts {
+            height: 58px;
+            border-bottom: 1px solid var(--sand);
+            padding: 3px 7px 0;
+            font-size: 10px;
+            color: var(--muted);
+            text-align: right
+        }
+
+        .dec {
+            position: relative
+        }
+
+        .dhr {
+            height: 58px;
+            border-bottom: 1px solid rgba(213, 218, 232, .5);
+            cursor: pointer;
+            transition: background .1s
+        }
+
+        .dhr:hover {
+            background: #ECF0FA
+        }
+
+        .dev {
+            position: absolute;
+            left: 9px;
+            right: 9px;
+            border-radius: 7px;
+            padding: 5px 8px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            z-index: 1;
+            box-shadow: 0 2px 7px rgba(0, 0, 0, .07);
+            transition: all .14s
+        }
+
+        .dev:hover {
+            transform: translateX(2px);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, .11)
+        }
+
+        .devt {
+            font-weight: 600;
+            margin-bottom: 1px
+        }
+
+        .devs {
+            font-size: 11px;
+            opacity: .72
+        }
+
+        .cdpanel {
+            background: var(--ww);
+            border-radius: 13px;
+            padding: 17px 20px;
+            box-shadow: var(--cs);
+            border: 1px solid rgba(213, 218, 232, .7);
+            margin-top: 4px
+        }
+
+        .gcbanner {
+            display: none;
+            background: linear-gradient(135deg, var(--navy), var(--navy2));
+            border-radius: 12px;
+            padding: 12px 17px;
+            margin-bottom: 14px;
+            align-items: center;
+            gap: 12px;
+            color: #fff
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--sand);
+            border-radius: 3px
+        }
+
+        /* MOBILE */
+        @media(max-width:900px) {
+            .sidebar {
+                transform: translateX(-100%)
+            }
+
+            .sidebar.open {
+                transform: translateX(0)
+            }
+
+            .overlay.open {
+                display: block
+            }
+
+            .main {
+                margin-left: 0
+            }
+
+            .hamburger {
+                display: flex
+            }
+
+            .topbar {
+                padding: 11px 14px
+            }
+
+            .tb-title {
+                font-size: 16px
+            }
+
+            .sw {
+                display: none
+            }
+
+            .content {
+                padding: 14px
+            }
+
+            .srow {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 9px
+            }
+
+            .g2 {
+                grid-template-columns: 1fr;
+                gap: 12px
+            }
+
+            .g3 {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px
+            }
+
+            .rg {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .cg {
+                grid-template-columns: 1fr
+            }
+
+            .wbanner {
+                padding: 18px
+            }
+
+            .wbanner h2 {
+                font-size: 19px
+            }
+
+            .wbanner::after {
+                display: none
+            }
+
+            .ppr {
+                flex-direction: column;
+                gap: 7px
+            }
+
+            .aacb {
+                grid-template-columns: repeat(4, 1fr)
+            }
+
+            .chdr {
+                padding: 11px 13px
+            }
+
+            .cmlbl {
+                font-size: 14px;
+                min-width: 120px
+            }
+
+            .ccell {
+                min-height: 52px;
+                padding: 4px 2px 2px
+            }
+
+            .cev {
+                display: none
+            }
+
+            .cleg {
+                display: none
+            }
+
+            .sh {
+                flex-direction: column;
+                align-items: flex-start
+            }
+
+            .ebar {
+                padding: 9px 14px;
+                font-size: 12px
+            }
+
+            .btn-p.tb-hide {
+                display: none
+            }
+        }
+
+        @media(max-width:540px) {
+            .srow {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .g3 {
+                grid-template-columns: 1fr
+            }
+
+            .rg {
+                grid-template-columns: 1fr
+            }
+
+            .aacb {
+                grid-template-columns: repeat(3, 1fr)
+            }
+
+            .modal,
+            .amodal {
+                padding: 18px
+            }
+
+            .toast {
+                bottom: 14px;
+                right: 14px;
+                font-size: 13px
+            }
+
+            .ccell {
+                min-height: 40px
+            }
+
+            .cdn {
+                font-size: 11px;
+                width: 20px;
+                height: 20px
+            }
+
+            .cdow {
+                font-size: 9px;
+                padding: 6px 0
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="overlay" id="overlay" onclick="closeSB()"></div>
+
+    <nav class="sidebar" id="sidebar">
+        <div class="logo">
+            <div class="logo-row">
+                <div class="brand">
+                    <div class="brand-row">
+                        <img src="logo.png" class="brand-logo">
+                        <div>
+                            <div class="brand-name">Wollongong Health</div>
+                            <div class="brand-tag">Disability Support</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="nav">
+                <div class="nav-lbl">Overview</div>
+                <div class="nav-item active" onclick="go('dashboard',this)"><span class="ni"></span> Dashboard</div>
+                <div class="nav-item" onclick="go('notifications',this)"><span class="ni"></span> Notifications <span
+                        class="badge">3</span></div>
+                <div class="nav-item" onclick="go('schedule',this)"><span class="ni"></span> My Schedule</div>
+                <div class="nav-item" onclick="go('messaging',this)"><span class="ni"></span> Messaging <span
+                        class="badge">2</span></div>
+                <div class="nav-lbl" style="margin-top:10px">Work</div>
+                <div class="nav-item" onclick="go('jobboard',this)"><span class="ni"></span> Job Board</div>
+                <div class="nav-item" onclick="go('availability',this)"><span class="ni"></span> Availability</div>
+                <div class="nav-item" onclick="go('shiftnotes',this)"><span class="ni"></span> Shift Notifications</div>
+                <div class="nav-lbl" style="margin-top:10px">My Records</div>
+                <div class="nav-item" onclick="go('forms',this)"><span class="ni"></span> My Forms</div>
+                <div class="nav-item" onclick="go('timesheet',this)"><span class="ni"></span> My Timesheet</div>
+                <div class="nav-item" onclick="go('mydocs',this)"><span class="ni"></span> My Documents</div>
+                <div class="nav-lbl" style="margin-top:10px">Organisation</div>
+                <div class="nav-item" onclick="go('dochub',this)"><span class="ni"></span> Documents Hub</div>
+                <div class="nav-item" onclick="go('plans',this)"><span class="ni"></span> Support Plans <span
+                        class="badge">4</span></div>
+                <div class="nav-item" onclick="go('goals',this)"><span class="ni"></span> Goals &amp; Progress</div>
+                <div class="nav-item" onclick="go('team',this)"><span class="ni"></span> Care Team</div>
+                <div class="nav-item" onclick="go('reports',this)"><span class="ni"></span> Reports</div>
+                <div class="nav-lbl" style="margin-top:10px">System</div>
+                <div class="nav-item" onclick="go('offline',this)"><span class="ni"></span> Offline Settings</div>
+                <div class="nav-item" onclick="go('about',this)"><span class="ni"></span> About</div>
+                <div class="nav-item" onclick="go('settings',this)"><span class="ni">⚙️</span> Settings</div>
+            </div>
+            <div class="sidebar-foot">
+                <div class="user-card">
+                    <div class="ava" id="sidebar-ava">SC</div>
+                    <div>
+                        <div class="uname" id="sidebar-uname">Sarah Chen</div>
+                        <div class="urole">Support Coordinator</div>
+                    </div>
+                </div>
+            </div>
+    </nav>
+
+    <main class="main">
+
+
+        <div class="topbar">
+            <button class="hamburger" onclick="toggleSB()"
+                aria-label="Menu"><span></span><span></span><span></span></button>
+            <div class="tb-title" id="ptitle">Dashboard</div>
+            <div class="tb-actions">
+                <div class="sw"><span class="sico">🔍</span><input class="si" type="text"
+                        placeholder="Search participants…"></div>
+                <button class="btn btn-ico" onclick="toast('📬 You have 3 unread notifications')">🔔</button>
+                <button class="btn btn-p tb-hide" onclick="openPlanModal()">+ Add Plan</button>
+            </div>
+        </div>
+
+        <div class="content">
+
+            <!-- DASHBOARD -->
+            <div class="page active" id="page-dashboard">
+                <div class="wbanner">
+                    <h2 id="welcome-heading">Good morning, Sarah ☀️</h2>
+                    <p>You have 3 appointments today and 2 support plan reviews due this week. Let's make it a great day
+                        for our participants.</p>
+                </div>
+                <div class="srow">
+                    <div class="scard">
+                        <div class="slbl">Active Participants</div>
+                        <div class="sval">24</div>
+                        <div class="ssub"><span class="sdot" style="background:var(--navy)"></span>+2 this month</div>
+                    </div>
+                    <div class="scard">
+                        <div class="slbl">Goals Achieved</div>
+                        <div class="sval">87</div>
+                        <div class="ssub"><span class="sdot" style="background:var(--red)"></span>91% success rate</div>
+                    </div>
+                    <div class="scard">
+                        <div class="slbl">Hours Supported</div>
+                        <div class="sval">342</div>
+                        <div class="ssub"><span class="sdot" style="background:#4A7FA5"></span>This month</div>
+                    </div>
+                    <div class="scard">
+                        <div class="slbl">Plans Active</div>
+                        <div class="sval">19</div>
+                        <div class="ssub"><span class="sdot" style="background:#C9962E"></span>5 up for review</div>
+                    </div>
+                </div>
+                <div class="g2">
+                    <div class="card">
+                        <div class="ch">
+                            <div class="ct">Today's Appointments</div><span class="ca"
+                                onclick="go('appointments',null)">View all →</span>
+                        </div>
+                        <div class="ai">
+                            <div class="atm">9:00 AM</div>
+                            <div>
+                                <div class="atl">Marcus — Daily Living Skills</div>
+                                <div class="asb">Home visit · 60 min</div>
+                            </div>
+                            <div class="atg">In-person</div>
+                        </div>
+                        <div class="ai r">
+                            <div class="atm">11:30</div>
+                            <div>
+                                <div class="atl">Team Review — NDIS Planning</div>
+                                <div class="asb">Zoom · 45 min</div>
+                            </div>
+                            <div class="atg" style="background:#FFE8EC;color:var(--red3)">Online</div>
+                        </div>
+                        <div class="ai g">
+                            <div class="atm">2:00 PM</div>
+                            <div>
+                                <div class="atl">Aisha — Therapy Session</div>
+                                <div class="asb">Office · 90 min</div>
+                            </div>
+                            <div class="atg" style="background:#FEF3CD;color:#B8860B">Pending</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="ch">
+                            <div class="ct">Priority Tasks</div><span class="ca">+ Add task</span>
+                        </div>
+                        <div class="ti">
+                            <div class="tck" onclick="tk(this)"></div>
+                            <div class="tt">
+                                <div class="tn">Submit NDIS plan for Marcus Johnson</div>
+                                <div class="tm">Due today · Plan review</div>
+                            </div>
+                            <div class="tp ph">High</div>
+                        </div>
+                        <div class="ti">
+                            <div class="tck" onclick="tk(this)"></div>
+                            <div class="tt">
+                                <div class="tn">Update Aisha's communication board</div>
+                                <div class="tm">Due tomorrow · AAC tools</div>
+                            </div>
+                            <div class="tp pm">Med</div>
+                        </div>
+                        <div class="ti">
+                            <div class="tck done" onclick="tk(this)">✓</div>
+                            <div class="tt">
+                                <div class="tn done">Order mobility aids for Thomas K.</div>
+                                <div class="tm">Completed · Equipment</div>
+                            </div>
+                            <div class="tp pl">Low</div>
+                        </div>
+                        <div class="ti">
+                            <div class="tck" onclick="tk(this)"></div>
+                            <div class="tt">
+                                <div class="tn">Caregiver training — manual handling</div>
+                                <div class="tm">Due Friday · Training</div>
+                            </div>
+                            <div class="tp pm">Med</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sh">
+                    <div class="stl">Quick Access</div>
+                </div>
+                <div class="g3">
+                    <div class="qc" onclick="go('communication',null)">
+                        <div class="qi" style="background:#E8EDF8">💬</div>
+                        <div class="qn">AAC Communication Board</div>
+                        <div class="qd">Augmentative &amp; alternative communication tools for participants</div>
+                    </div>
+                    <div class="qc" onclick="go('resources',null)">
+                        <div class="qi" style="background:#FFE8EC">📚</div>
+                        <div class="qn">Resource Library</div>
+                        <div class="qd">Guides, templates, and educational materials</div>
+                    </div>
+                    <div class="qc" onclick="go('reports',null)">
+                        <div class="qi" style="background:#E8EDF8">📊</div>
+                        <div class="qn">Progress Reports</div>
+                        <div class="qd">Generate and share participant progress documentation</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PLANS -->
+            <div class="page" id="page-plans">
+                <div class="sh">
+                    <div class="stl">Support Plans</div><button class="btn btn-p" onclick="openPlanModal()">+ New
+                        Plan</button>
+                </div>
+                <div class="pc">
+                    <div class="pch">
+                        <div class="pav" style="background:#E8EDF8">👨</div>
+                        <div>
+                            <div class="pn">Marcus Johnson</div>
+                            <div class="pty">NDIS · Physical Disability · Age 34</div>
+                        </div><span class="ps sa">Active</span>
+                    </div>
+                    <div class="pgs"><span class="gt">Daily Living</span><span class="gt">Community Access</span><span
+                            class="gt">Employment</span><span class="gt">Transport</span></div>
+                    <div class="ppr">
+                        <div class="pri">
+                            <div class="prl">Goals Progress</div>
+                            <div class="prb">
+                                <div class="prf" style="width:72%;background:var(--navy)"></div>
+                            </div>
+                        </div>
+                        <div class="pri">
+                            <div class="prl">Budget Used</div>
+                            <div class="prb">
+                                <div class="prf" style="width:58%;background:#4A7FA5"></div>
+                            </div>
+                        </div>
+                        <div class="pri">
+                            <div class="prl">Plan Period</div>
+                            <div class="prb">
+                                <div class="prf" style="width:45%;background:#C9962E"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pc">
+                    <div class="pch">
+                        <div class="pav" style="background:#FFE8EC">👩</div>
+                        <div>
+                            <div class="pn">Aisha Okonkwo</div>
+                            <div class="pty">NDIS · Autism · Communication Support · Age 22</div>
+                        </div><span class="ps sr">Under Review</span>
+                    </div>
+                    <div class="pgs"><span class="gt">Communication</span><span class="gt">Social Skills</span><span
+                            class="gt">Sensory Support</span><span class="gt">Education</span></div>
+                    <div class="ppr">
+                        <div class="pri">
+                            <div class="prl">Goals Progress</div>
+                            <div class="prb">
+                                <div class="prf" style="width:85%;background:var(--navy)"></div>
+                            </div>
+                        </div>
+                        <div class="pri">
+                            <div class="prl">Budget Used</div>
+                            <div class="prb">
+                                <div class="prf" style="width:79%;background:#4A7FA5"></div>
+                            </div>
+                        </div>
+                        <div class="pri">
+                            <div class="prl">Plan Period</div>
+                            <div class="prb">
+                                <div class="prf" style="width:88%;background:var(--red)"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pc">
+                    <div class="pch">
+                        <div class="pav" style="background:#E8EDF8">👴</div>
+                        <div>
+                            <div class="pn">Thomas Kato</div>
+                            <div class="pty">NDIS · Acquired Brain Injury · Age 58</div>
+                        </div><span class="ps sa">Active</span>
+                    </div>
+                    <div class="pgs"><span class="gt">Mobility</span><span class="gt">Cognitive Support</span><span
+                            class="gt">Home Modifications</span></div>
+                    <div class="ppr">
+                        <div class="pri">
+                            <div class="prl">Goals Progress</div>
+                            <div class="prb">
+                                <div class="prf" style="width:62%;background:var(--navy)"></div>
+                            </div>
+                        </div>
+                        <div class="pri">
+                            <div class="prl">Budget Used</div>
+                            <div class="prb">
+                                <div class="prf" style="width:41%;background:#4A7FA5"></div>
+                            </div>
+                        </div>
+                        <div class="pri">
+                            <div class="prl">Plan Period</div>
+                            <div class="prb">
+                                <div class="prf" style="width:30%;background:#C9962E"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pc">
+                    <div class="pch">
+                        <div class="pav" style="background:#FFE8EC">👧</div>
+                        <div>
+                            <div class="pn">Sophie Marchand</div>
+                            <div class="pty">NDIS · Intellectual Disability · Age 19</div>
+                        </div><span class="ps sp">Pending</span>
+                    </div>
+                    <div class="pgs"><span class="gt">Independence</span><span class="gt">Vocational
+                            Training</span><span class="gt">Recreation</span></div>
+                    <div class="ppr">
+                        <div class="pri">
+                            <div class="prl">Goals Progress</div>
+                            <div class="prb">
+                                <div class="prf" style="width:28%;background:var(--navy)"></div>
+                            </div>
+                        </div>
+                        <div class="pri">
+                            <div class="prl">Budget Used</div>
+                            <div class="prb">
+                                <div class="prf" style="width:18%;background:#4A7FA5"></div>
+                            </div>
+                        </div>
+                        <div class="pri">
+                            <div class="prl">Plan Period</div>
+                            <div class="prb">
+                                <div class="prf" style="width:12%;background:#C9962E"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COMM -->
+            <div class="page" id="page-communication">
+                <div class="sh">
+                    <div class="stl">Communication Tools</div>
+                </div>
+                <div class="card" style="margin-bottom:16px">
+                    <div class="ch">
+                        <div class="ct">AAC Quick Board</div><span class="ca" onclick="clearAAC()">Clear</span>
+                    </div>
+                    <div class="aacb">
+                        <div class="aacbtn" onclick="addAAC('Yes ✅')"><span class="aacico">✅</span><span
+                                class="aacw">YES</span></div>
+                        <div class="aacbtn" onclick="addAAC('No ❌')"><span class="aacico">❌</span><span
+                                class="aacw">NO</span></div>
+                        <div class="aacbtn" onclick="addAAC('Help 🙋')"><span class="aacico">🙋</span><span
+                                class="aacw">HELP</span></div>
+                        <div class="aacbtn" onclick="addAAC('Stop ✋')"><span class="aacico">✋</span><span
+                                class="aacw">STOP</span></div>
+                        <div class="aacbtn" onclick="addAAC('More ➕')"><span class="aacico">➕</span><span
+                                class="aacw">MORE</span></div>
+                        <div class="aacbtn" onclick="addAAC('I want 🤲')"><span class="aacico">🤲</span><span
+                                class="aacw">I WANT</span></div>
+                        <div class="aacbtn" onclick="addAAC('Food 🍽️')"><span class="aacico">🍽️</span><span
+                                class="aacw">FOOD</span></div>
+                        <div class="aacbtn" onclick="addAAC('Water 💧')"><span class="aacico">💧</span><span
+                                class="aacw">WATER</span></div>
+                        <div class="aacbtn" onclick="addAAC('Toilet 🚽')"><span class="aacico">🚽</span><span
+                                class="aacw">TOILET</span></div>
+                        <div class="aacbtn" onclick="addAAC('Rest 😴')"><span class="aacico">😴</span><span
+                                class="aacw">REST</span></div>
+                        <div class="aacbtn" onclick="addAAC('Happy 😊')"><span class="aacico">😊</span><span
+                                class="aacw">HAPPY</span></div>
+                        <div class="aacbtn" onclick="addAAC('Sad 😢')"><span class="aacico">😢</span><span
+                                class="aacw">SAD</span></div>
+                        <div class="aacbtn" onclick="addAAC('Pain 🤕')"><span class="aacico">🤕</span><span
+                                class="aacw">PAIN</span></div>
+                        <div class="aacbtn" onclick="addAAC('Home 🏠')"><span class="aacico">🏠</span><span
+                                class="aacw">HOME</span></div>
+                        <div class="aacbtn" onclick="addAAC('Outside 🌳')"><span class="aacico">🌳</span><span
+                                class="aacw">OUTSIDE</span></div>
+                    </div>
+                    <div class="aacout"><span class="ph2" id="aac-ph">Tap buttons above to build a message…</span><span
+                            id="aac-txt"></span></div>
+                    <div style="display:flex;gap:7px;margin-top:11px;flex-wrap:wrap">
+                        <button class="btn btn-p" onclick="speakAAC()">🔊 Speak</button>
+                        <button class="btn btn-o" onclick="clearAAC()">Clear</button>
+                    </div>
+                </div>
+                <div class="cg">
+                    <div class="ctool">
+                        <div class="cico">📝</div>
+                        <div class="ctit">Easy Read Creator</div>
+                        <div class="cdsc">Convert complex documents into easy-read format with simple language and
+                            visual supports.</div><button class="btn btn-o"
+                            onclick="toast('📝 Easy Read Creator opening…')">Open Tool</button>
+                    </div>
+                    <div class="ctool">
+                        <div class="cico">🖼️</div>
+                        <div class="ctit">Visual Schedule Builder</div>
+                        <div class="cdsc">Create visual daily schedules with pictures and symbols for daily routines.
+                        </div><button class="btn btn-o" onclick="toast('🖼️ Schedule Builder opening…')">Open
+                            Tool</button>
+                    </div>
+                    <div class="ctool">
+                        <div class="cico">🌐</div>
+                        <div class="ctit">Translation Support</div>
+                        <div class="cdsc">Access documents and communications in 40+ languages for diverse participants.
+                        </div><button class="btn btn-o" onclick="toast('🌐 Translation tool opening…')">Open
+                            Tool</button>
+                    </div>
+                    <div class="ctool">
+                        <div class="cico">🎤</div>
+                        <div class="ctit">Voice &amp; Text Relay</div>
+                        <div class="cdsc">Real-time voice-to-text and text-to-voice support during appointments.</div>
+                        <button class="btn btn-o" onclick="toast('🎤 Voice relay opening…')">Open Tool</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RESOURCES -->
+            <div class="page" id="page-resources">
+                <div class="sh">
+                    <div class="stl">Resource Library</div><button class="btn btn-o">Upload Resource</button>
+                </div>
+                <div class="rg">
+                    <div class="rc">
+                        <div class="rth" style="background:#E8EDF8">📋</div>
+                        <div class="rb">
+                            <div class="rcat">Planning</div>
+                            <div class="rtl">NDIS Plan Templates &amp; Guides</div>
+                            <div class="rdc">Step-by-step support plan templates aligned with NDIS framework</div>
+                        </div>
+                    </div>
+                    <div class="rc">
+                        <div class="rth" style="background:#FFE8EC">♿</div>
+                        <div class="rb">
+                            <div class="rcat">Equipment</div>
+                            <div class="rtl">Assistive Technology Directory</div>
+                            <div class="rdc">Catalogue of mobility aids, communication devices, and daily living tools
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rc">
+                        <div class="rth" style="background:#E8EDF8">🧠</div>
+                        <div class="rb">
+                            <div class="rcat">Training</div>
+                            <div class="rtl">Behaviour Support Strategies</div>
+                            <div class="rdc">Evidence-based positive behaviour support guides for coordinators</div>
+                        </div>
+                    </div>
+                    <div class="rc">
+                        <div class="rth" style="background:#FFE8EC">🏠</div>
+                        <div class="rb">
+                            <div class="rcat">Housing</div>
+                            <div class="rtl">Home Modification Checklist</div>
+                            <div class="rdc">Accessibility modifications for different disability types and needs</div>
+                        </div>
+                    </div>
+                    <div class="rc">
+                        <div class="rth" style="background:#FEF3CD">💼</div>
+                        <div class="rb">
+                            <div class="rcat">Employment</div>
+                            <div class="rtl">Supported Employment Guide</div>
+                            <div class="rdc">Employer partnerships, job supports, and workplace adjustment resources
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rc">
+                        <div class="rth" style="background:#E8EDF8">❤️</div>
+                        <div class="rb">
+                            <div class="rcat">Wellbeing</div>
+                            <div class="rtl">Mental Health &amp; Wellbeing Toolkit</div>
+                            <div class="rdc">Self-regulation strategies, crisis plans, and wellbeing check-in tools
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GOALS -->
+            <div class="page" id="page-goals">
+                <div class="sh">
+                    <div class="stl">Goals &amp; Progress</div><button class="btn btn-p"
+                        onclick="toast('✅ Goal added successfully!')">+ New Goal</button>
+                </div>
+                <div class="card" style="margin-bottom:16px">
+                    <div class="ch">
+                        <div class="ct">Marcus Johnson — Active Goals</div>
+                    </div>
+                    <div class="ti">
+                        <div class="tck done" onclick="tk(this)">✓</div>
+                        <div class="tt">
+                            <div class="tn done">Independently catch the bus to work 3x per week</div>
+                            <div class="tm">Community Access · Achieved March 2026</div>
+                        </div>
+                        <div class="tp pl">Done</div>
+                    </div>
+                    <div class="ti">
+                        <div class="tck" onclick="tk(this)"></div>
+                        <div class="tt">
+                            <div class="tn">Complete barista training certificate</div>
+                            <div class="tm">Employment · Due June 2026 · In progress</div>
+                        </div>
+                        <div class="tp ph">Active</div>
+                    </div>
+                    <div class="ti">
+                        <div class="tck" onclick="tk(this)"></div>
+                        <div class="tt">
+                            <div class="tn">Prepare and cook 5 meals per week independently</div>
+                            <div class="tm">Daily Living · Due August 2026</div>
+                        </div>
+                        <div class="tp pm">Active</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="ch">
+                        <div class="ct">Aisha Okonkwo — Active Goals</div>
+                    </div>
+                    <div class="ti">
+                        <div class="tck done" onclick="tk(this)">✓</div>
+                        <div class="tt">
+                            <div class="tn done">Use AAC device to request needs in 4/5 opportunities</div>
+                            <div class="tm">Communication · Achieved Feb 2026</div>
+                        </div>
+                        <div class="tp pl">Done</div>
+                    </div>
+                    <div class="ti">
+                        <div class="tck" onclick="tk(this)"></div>
+                        <div class="tt">
+                            <div class="tn">Enrol in Certificate II Community Services</div>
+                            <div class="tm">Education · Due July 2026</div>
+                        </div>
+                        <div class="tp ph">Active</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- APPOINTMENTS -->
+            <div class="page" id="page-appointments">
+                <div class="sh">
+                    <div class="stl">Appointments</div>
+                    <div style="display:flex;gap:7px;align-items:center;flex-wrap:wrap">
+                        <div class="cvtog">
+                            <button class="cvbtn active" id="vbm" onclick="setView('month',this)">Month</button>
+                            <button class="cvbtn" id="vbw" onclick="setView('week',this)">Week</button>
+                            <button class="cvbtn" id="vbd" onclick="setView('day',this)">Day</button>
+                        </div>
+                        <button class="btn btn-o gcbtn" onclick="gcConnect()" id="gcbtn">
+                            <svg width="14" height="14" viewBox="0 0 48 48" style="flex-shrink:0">
+                                <rect x="6" y="6" width="36" height="36" rx="4" fill="#fff" stroke="#D5DAE8"
+                                    stroke-width="2" />
+                                <rect x="6" y="14" width="36" height="4" fill="#4285F4" />
+                                <rect x="14" y="6" width="4" height="8" rx="2" fill="#4285F4" />
+                                <rect x="30" y="6" width="4" height="8" rx="2" fill="#4285F4" /><text x="24" y="36"
+                                    text-anchor="middle" font-size="14" font-weight="700" fill="#34A853">G</text>
+                            </svg>
+                            Sync Google
+                        </button>
+                        <button class="btn btn-p" onclick="openApptModal()">+ New</button>
+                    </div>
+                </div>
+
+                <div class="gcbanner" id="gcbanner">
+                    <svg width="20" height="20" viewBox="0 0 48 48">
+                        <rect x="2" y="2" width="44" height="44" rx="6" fill="#fff" />
+                        <rect x="2" y="12" width="44" height="6" fill="#4285F4" />
+                        <rect x="12" y="2" width="6" height="12" rx="3" fill="#4285F4" />
+                        <rect x="30" y="2" width="6" height="12" rx="3" fill="#4285F4" /><text x="24" y="38"
+                            text-anchor="middle" font-size="16" font-weight="700" fill="#34A853">G</text>
+                    </svg>
+                    <div style="flex:1">
+                        <div style="font-weight:600;font-size:14px">Connected to Google Calendar</div>
+                        <div style="font-size:12px;opacity:.82">Syncing automatically. Last synced just now.</div>
+                    </div>
+                    <button class="btn"
+                        style="background:rgba(255,255,255,.2);color:#fff;font-size:12px;padding:5px 11px"
+                        onclick="gcDisconnect()">Disconnect</button>
+                </div>
+
+                <div class="cshell">
+                    <div class="chdr">
+                        <div style="display:flex;align-items:center;gap:9px">
+                            <button class="cnav" onclick="calNav(-1)">&#8249;</button>
+                            <div class="cmlbl" id="cmlbl"></div>
+                            <button class="cnav" onclick="calNav(1)">&#8250;</button>
+                            <button class="ctbtn" onclick="goToday()">Today</button>
+                        </div>
+                        <div class="cleg">
+                            <span class="ldot" style="background:#4A7FA5"></span>In-person
+                            <span class="ldot" style="background:var(--navy)"></span>Online
+                            <span class="ldot" style="background:#C9962E"></span>Assessment
+                            <span class="ldot" style="background:var(--red)"></span>Internal
+                        </div>
+                    </div>
+                    <div id="mv">
+                        <div class="cdowr">
+                            <div class="cdow">Sun</div>
+                            <div class="cdow">Mon</div>
+                            <div class="cdow">Tue</div>
+                            <div class="cdow">Wed</div>
+                            <div class="cdow">Thu</div>
+                            <div class="cdow">Fri</div>
+                            <div class="cdow">Sat</div>
+                        </div>
+                        <div class="cgrid" id="cgrid"></div>
+                    </div>
+                    <div id="wv" style="display:none">
+                        <div class="wgrid" id="wgrid"></div>
+                    </div>
+                    <div id="dv" style="display:none">
+                        <div class="dvw" id="dvw"></div>
+                    </div>
+                </div>
+
+                <div class="cdpanel" id="cdpanel" style="display:none">
+                    <div class="ch">
+                        <div class="ct" id="cdtit">Events</div><span class="ca"
+                            onclick="document.getElementById('cdpanel').style.display='none'">✕ Close</span>
+                    </div>
+                    <div id="cdlist"></div>
+                </div>
+            </div>
+
+            <!-- TEAM -->
+            <div class="page" id="page-team">
+                <div class="sh">
+                    <div class="stl">Care Team</div><button class="btn btn-p"
+                        onclick="toast('👥 Team member invited!')">+ Invite</button>
+                </div>
+                <div class="g3">
+                    <div class="qc">
+                        <div style="display:flex;align-items:center;gap:10px">
+                            <div class="ava" id="team-ava" style="width:44px;height:44px;font-size:15px">SC</div>
+                            <div>
+                                <div id="team-uname" style="font-size:14px;font-weight:600">Sarah Chen</div>
+                                <div style="font-size:12px;color:var(--muted)">Support Coordinator</div>
+                            </div>
+                        </div>
+                        <div style="font-size:12px;color:var(--muted)">24 participants · 5 yrs</div><button
+                            class="btn btn-o" id="team-msg-btn" style="font-size:12px;padding:6px 11px"
+                            onclick="toast('💬 Message sent')">Message</button>
+                    </div>
+                    <div class="qc">
+                        <div style="display:flex;align-items:center;gap:10px">
+                            <div class="ava"
+                                style="width:44px;height:44px;font-size:15px;background:linear-gradient(135deg,#4A7FA5,#6FA3C7)">
+                                AW</div>
+                            <div>
+                                <div style="font-size:14px;font-weight:600">Amy Walsh</div>
+                                <div style="font-size:12px;color:var(--muted)">Occupational Therapist</div>
+                            </div>
+                        </div>
+                        <div style="font-size:12px;color:var(--muted)">12 participants · 8 yrs</div><button
+                            class="btn btn-o" style="font-size:12px;padding:6px 11px"
+                            onclick="toast('💬 Message sent to Amy')">Message</button>
+                    </div>
+                    <div class="qc">
+                        <div style="display:flex;align-items:center;gap:10px">
+                            <div class="ava"
+                                style="width:44px;height:44px;font-size:15px;background:linear-gradient(135deg,var(--navy),var(--navy2))">
+                                DY</div>
+                            <div>
+                                <div style="font-size:14px;font-weight:600">Dr. David Yuen</div>
+                                <div style="font-size:12px;color:var(--muted)">Speech Pathologist</div>
+                            </div>
+                        </div>
+                        <div style="font-size:12px;color:var(--muted)">8 participants · 12 yrs</div><button
+                            class="btn btn-o" style="font-size:12px;padding:6px 11px"
+                            onclick="toast('💬 Message sent to David')">Message</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- REPORTS -->
+            <div class="page" id="page-reports">
+                <div class="sh">
+                    <div class="stl">Reports &amp; Analytics</div><button class="btn btn-o"
+                        onclick="toast('📄 Report exported to PDF')">Export PDF</button>
+                </div>
+                <div class="g2">
+                    <div class="card">
+                        <div class="ch">
+                            <div class="ct">Goal Achievement Rate</div>
+                        </div>
+                        <div style="text-align:center;padding:16px 0">
+                            <div style="font-family:'Fraunces',serif;font-size:56px;font-weight:700;color:var(--navy)">
+                                91%</div>
+                            <div style="font-size:13px;color:var(--muted)">Average across all participants</div>
+                        </div>
+                        <div class="ppr">
+                            <div class="pri">
+                                <div class="prl">Q1 2026</div>
+                                <div class="prb">
+                                    <div class="prf" style="width:91%;background:var(--navy)"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="ch">
+                            <div class="ct">Support Hours</div>
+                        </div>
+                        <div style="text-align:center;padding:16px 0">
+                            <div style="font-family:'Fraunces',serif;font-size:56px;font-weight:700;color:var(--red)">
+                                342</div>
+                            <div style="font-size:13px;color:var(--muted)">Hours delivered this month</div>
+                        </div>
+                        <div class="ppr">
+                            <div class="pri">
+                                <div class="prl">vs. Target (380hrs)</div>
+                                <div class="prb">
+                                    <div class="prf" style="width:90%;background:var(--red)"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card" style="margin-top:16px">
+                    <div class="ch">
+                        <div class="ct">Recent Reports</div>
+                    </div>
+                    <div class="ai">
+                        <div class="atm" style="min-width:72px">Mar 2026</div>
+                        <div>
+                            <div class="atl">Monthly Participant Progress Report</div>
+                            <div class="asb">All 24 participants · Auto-generated</div>
+                        </div>
+                        <div class="atg" style="cursor:pointer" onclick="toast('📥 Downloading…')">Download</div>
+                    </div>
+                    <div class="ai r">
+                        <div class="atm" style="min-width:72px">Feb 2026</div>
+                        <div>
+                            <div class="atl">NDIS Outcome Measurement Report</div>
+                            <div class="asb">Q1 2026 outcomes · NDIA submission</div>
+                        </div>
+                        <div class="atg" style="cursor:pointer;background:#FFE8EC;color:var(--red3)"
+                            onclick="toast('📥 Downloading…')">Download</div>
+                    </div>
+                    <div class="ai g">
+                        <div class="atm" style="min-width:72px">Jan 2026</div>
+                        <div>
+                            <div class="atl">Carer Wellbeing Survey Results</div>
+                            <div class="asb">Support worker satisfaction · 18 respondents</div>
+                        </div>
+                        <div class="atg" style="cursor:pointer;background:#FEF3CD;color:#B8860B"
+                            onclick="toast('📥 Downloading…')">Download</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SETTINGS -->
+            <div class="page" id="page-settings">
+                <div class="sh">
+                    <div class="stl">Settings &amp; Accessibility</div>
+                </div>
+                <div class="g2">
+                    <div class="card">
+                        <div class="ch">
+                            <div class="ct">Accessibility</div>
+                        </div>
+                        <div class="ti" style="padding:12px 0">
+                            <div class="tt">
+                                <div class="tn" style="font-size:14px;font-weight:500">High Contrast Mode</div>
+                                <div class="tm">Enhance visual contrast for low vision</div>
+                            </div>
+                            <div style="width:42px;height:23px;background:var(--navy);border-radius:11px;cursor:pointer;position:relative;transition:background .2s"
+                                onclick="sw(this)">
+                                <div
+                                    style="width:19px;height:19px;background:#fff;border-radius:50%;position:absolute;top:2px;right:2px;transition:right .2s">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ti" style="padding:12px 0">
+                            <div class="tt">
+                                <div class="tn" style="font-size:14px;font-weight:500">Large Text</div>
+                                <div class="tm">Increase default font size throughout</div>
+                            </div>
+                            <div style="width:42px;height:23px;background:var(--sand);border-radius:11px;cursor:pointer;position:relative;transition:background .2s"
+                                onclick="sw(this)">
+                                <div
+                                    style="width:19px;height:19px;background:#fff;border-radius:50%;position:absolute;top:2px;left:2px;transition:left .2s">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ti" style="padding:12px 0;border-bottom:none">
+                            <div class="tt">
+                                <div class="tn" style="font-size:14px;font-weight:500">Screen Reader Support</div>
+                                <div class="tm">Optimise for NVDA / VoiceOver</div>
+                            </div>
+                            <div style="width:42px;height:23px;background:var(--navy);border-radius:11px;cursor:pointer;position:relative;transition:background .2s"
+                                onclick="sw(this)">
+                                <div
+                                    style="width:19px;height:19px;background:#fff;border-radius:50%;position:absolute;top:2px;right:2px;transition:right .2s">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="ch">
+                            <div class="ct">Notifications</div>
+                        </div>
+                        <div class="ti" style="padding:12px 0">
+                            <div class="tt">
+                                <div class="tn" style="font-size:14px;font-weight:500">Appointment Reminders</div>
+                                <div class="tm">24h and 1h before each appointment</div>
+                            </div>
+                            <div style="width:42px;height:23px;background:var(--navy);border-radius:11px;cursor:pointer;position:relative"
+                                onclick="sw(this)">
+                                <div
+                                    style="width:19px;height:19px;background:#fff;border-radius:50%;position:absolute;top:2px;right:2px">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ti" style="padding:12px 0;border-bottom:none">
+                            <div class="tt">
+                                <div class="tn" style="font-size:14px;font-weight:500">Goal Milestone Alerts</div>
+                                <div class="tm">Celebrate when goals are achieved</div>
+                            </div>
+                            <div style="width:42px;height:23px;background:var(--navy);border-radius:11px;cursor:pointer;position:relative"
+                                onclick="sw(this)">
+                                <div
+                                    style="width:19px;height:19px;background:#fff;border-radius:50%;position:absolute;top:2px;right:2px">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NOTIFICATIONS -->
+            <div class="page" id="page-notifications">
+                <div class="sh">
+                    <div class="stl">Notifications</div><button class="btn btn-o"
+                        onclick="toast('✓ All marked as read')">Mark all read</button>
+                </div>
+                <div class="card">
+                    <div class="ai" style="border-left-color:var(--red)">
+                        <div class="atm" style="min-width:54px;color:var(--red)">New</div>
+                        <div>
+                            <div class="atl">🔔 Shift reminder: Marcus — 9:00 AM tomorrow</div>
+                            <div class="asb">Sent 10 mins ago · Appointment</div>
+                        </div>
+                        <div class="atg" style="background:#FFE8EC;color:var(--red3)">Unread</div>
+                    </div>
+                    <div class="ai" style="border-left-color:var(--red)">
+                        <div class="atm" style="min-width:54px;color:var(--red)">New</div>
+                        <div>
+                            <div class="atl">📋 Aisha's support plan is due for review</div>
+                            <div class="asb">Sent 1 hour ago · Plan review</div>
+                        </div>
+                        <div class="atg" style="background:#FFE8EC;color:var(--red3)">Unread</div>
+                    </div>
+                    <div class="ai" style="border-left-color:var(--navy)">
+                        <div class="atm" style="min-width:54px">Today</div>
+                        <div>
+                            <div class="atl">✅ Thomas K. goal marked complete</div>
+                            <div class="asb">Sent 3 hours ago · Goals</div>
+                        </div>
+                        <div class="atg">Read</div>
+                    </div>
+                    <div class="ai" style="border-left-color:#C9962E">
+                        <div class="atm" style="min-width:54px">Yesterday</div>
+                        <div>
+                            <div class="atl">📄 New document uploaded to Documents Hub</div>
+                            <div class="asb">Manual Handling Training PDF</div>
+                        </div>
+                        <div class="atg" style="background:#FEF3CD;color:#B8860B">Read</div>
+                    </div>
+                    <div class="ai" style="border-left-color:var(--navy)">
+                        <div class="atm" style="min-width:54px">2 days ago</div>
+                        <div>
+                            <div class="atl">💬 New message from Amy Walsh</div>
+                            <div class="asb">Re: Sophie's vocational placement</div>
+                        </div>
+                        <div class="atg">Read</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MY SCHEDULE -->
+            <div class="page" id="page-schedule">
+                <div class="sh">
+                    <div class="stl">My Schedule</div>
+                    <div style="display:flex;gap:7px;align-items:center;flex-wrap:wrap">
+                        <div class="cvtog">
+                            <button class="cvbtn active" id="schvbm" onclick="toast('📅 Month view')">Month</button>
+                            <button class="cvbtn" id="schvbw" onclick="toast('📅 Week view')">Week</button>
+                            <button class="cvbtn" id="schvbd" onclick="toast('📅 Day view')">Day</button>
+                        </div>
+                        <button class="btn btn-p" onclick="openApptModal()">+ New Shift</button>
+                    </div>
+                </div>
+                <div class="g2" style="margin-bottom:16px">
+                    <div class="card">
+                        <div class="ch">
+                            <div class="ct">This Week</div>
+                        </div>
+                        <div class="ai">
+                            <div class="atm">Mon</div>
+                            <div>
+                                <div class="atl">Marcus — Daily Living Skills</div>
+                                <div class="asb">9:00 AM · 60 min · Home visit</div>
+                            </div>
+                            <div class="atg">In-person</div>
+                        </div>
+                        <div class="ai r">
+                            <div class="atm">Mon</div>
+                            <div>
+                                <div class="atl">Team Planning Meeting</div>
+                                <div class="asb">2:00 PM · 45 min · Office</div>
+                            </div>
+                            <div class="atg" style="background:#FFE8EC;color:var(--red3)">Internal</div>
+                        </div>
+                        <div class="ai" style="border-left-color:#7B50C0">
+                            <div class="atm">Tue</div>
+                            <div>
+                                <div class="atl">Aisha — Speech Therapy</div>
+                                <div class="asb">10:00 AM · 60 min · Clinic</div>
+                            </div>
+                            <div class="atg" style="background:#F0EAF8;color:#4A2080">Therapy</div>
+                        </div>
+                        <div class="ai g">
+                            <div class="atm">Wed</div>
+                            <div>
+                                <div class="atl">Thomas — OT Assessment</div>
+                                <div class="asb">1:00 PM · 90 min · Home</div>
+                            </div>
+                            <div class="atg" style="background:#FEF3CD;color:#B8860B">Assessment</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="ch">
+                            <div class="ct">Hours Summary</div>
+                        </div>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
+                            <div style="text-align:center;padding:14px;background:var(--bg);border-radius:10px">
+                                <div
+                                    style="font-family:'Fraunces',serif;font-size:30px;font-weight:700;color:var(--navy)">
+                                    38</div>
+                                <div style="font-size:12px;color:var(--muted)">Hours this week</div>
+                            </div>
+                            <div style="text-align:center;padding:14px;background:var(--bg);border-radius:10px">
+                                <div
+                                    style="font-family:'Fraunces',serif;font-size:30px;font-weight:700;color:var(--red)">
+                                    152</div>
+                                <div style="font-size:12px;color:var(--muted)">Hours this month</div>
+                            </div>
+                        </div>
+                        <div class="ppr">
+                            <div class="pri">
+                                <div class="prl">Weekly target (40hrs)</div>
+                                <div class="prb">
+                                    <div class="prf" style="width:95%;background:var(--navy)"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="ch">
+                        <div class="ct">Upcoming Shifts</div><span class="ca" onclick="go('appointments',null)">Full
+                            calendar →</span>
+                    </div>
+                    <div class="ai">
+                        <div class="atm">Thu</div>
+                        <div>
+                            <div class="atl">Sophie — Vocational Tour</div>
+                            <div class="asb">3:00 PM · 60 min · Community</div>
+                        </div>
+                        <div class="atg">In-person</div>
+                    </div>
+                    <div class="ai" style="border-left-color:#012169">
+                        <div class="atm">Fri</div>
+                        <div>
+                            <div class="atl">NDIS Review — Marcus</div>
+                            <div class="asb">11:00 AM · 90 min · Zoom</div>
+                        </div>
+                        <div class="atg" style="background:#E8EDF8;color:var(--navy)">Online</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MESSAGING -->
+            <div class="page" id="page-messaging">
+                <div class="sh">
+                    <div class="stl">Messaging</div><button class="btn btn-p"
+                        onclick="toast('✉️ New message compose opened')">+ New Message</button>
+                </div>
+                <div class="g2">
+                    <div class="card" style="max-height:500px;overflow-y:auto">
+                        <div class="ch">
+                            <div class="ct">Conversations</div>
+                        </div>
+                        <div class="ai" style="border-left-color:var(--red);cursor:pointer"
+                            onclick="toast('💬 Opening Amy Walsh chat…')">
+                            <div class="ava"
+                                style="width:36px;height:36px;font-size:12px;background:linear-gradient(135deg,#4A7FA5,#6FA3C7)">
+                                AW</div>
+                            <div style="flex:1;min-width:0">
+                                <div class="atl">Amy Walsh</div>
+                                <div class="asb" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Re:
+                                    Sophie's vocational placement update…</div>
+                            </div>
+                            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+                                <div style="font-size:11px;color:var(--muted)">2m ago</div>
+                                <div class="badge">2</div>
+                            </div>
+                        </div>
+                        <div class="ai" style="border-left-color:var(--navy);cursor:pointer"
+                            onclick="toast('💬 Opening Dr. Yuen chat…')">
+                            <div class="ava"
+                                style="width:36px;height:36px;font-size:12px;background:linear-gradient(135deg,var(--navy),var(--navy2))">
+                                DY</div>
+                            <div style="flex:1;min-width:0">
+                                <div class="atl">Dr. David Yuen</div>
+                                <div class="asb" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
+                                    Aisha's therapy notes are ready for review</div>
+                            </div>
+                            <div style="font-size:11px;color:var(--muted)">1h ago</div>
+                        </div>
+                        <div class="ai" style="border-left-color:#C9962E;cursor:pointer"
+                            onclick="toast('💬 Opening team chat…')">
+                            <div class="ava"
+                                style="width:36px;height:36px;font-size:12px;background:linear-gradient(135deg,#C9962E,#E8B84B)">
+                                TM</div>
+                            <div style="flex:1;min-width:0">
+                                <div class="atl">Team Group Chat</div>
+                                <div class="asb" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
+                                    Training reminder for Friday — please confirm attendance</div>
+                            </div>
+                            <div style="font-size:11px;color:var(--muted)">Yesterday</div>
+                        </div>
+                        <div class="ai" style="border-left-color:var(--muted);cursor:pointer"
+                            onclick="toast('💬 Opening Marcus family chat…')">
+                            <div class="ava"
+                                style="width:36px;height:36px;font-size:12px;background:linear-gradient(135deg,#7B50C0,#9B70E0)">
+                                MJ</div>
+                            <div style="flex:1;min-width:0">
+                                <div class="atl">Marcus Johnson (Family)</div>
+                                <div class="asb" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
+                                    Thanks for the plan update, we appreciate it</div>
+                            </div>
+                            <div style="font-size:11px;color:var(--muted)">2 days ago</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="ch">
+                            <div class="ct">Quick Message</div>
+                        </div>
+                        <div class="fg"><label class="fl">To</label><select class="fsel">
+                                <option>Amy Walsh</option>
+                                <option>Dr. David Yuen</option>
+                                <option>Team Group Chat</option>
+                                <option>Marcus Johnson (Family)</option>
+                            </select></div>
+                        <div class="fg"><label class="fl">Subject</label><input class="fi" type="text"
+                                placeholder="Message subject…"></div>
+                        <div class="fg"><label class="fl">Message</label><textarea class="fi" rows="5"
+                                placeholder="Type your message…" style="resize:vertical"></textarea></div>
+                        <div class="mf" style="margin-top:0"><button class="btn btn-p"
+                                onclick="toast('✅ Message sent successfully!')">Send Message</button></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- JOB BOARD -->
+            <div class="page" id="page-jobboard">
+                <div class="sh">
+                    <div class="stl">Job Board</div><button class="btn btn-o"
+                        onclick="toast('🔍 Filters applied')">Filter</button>
+                </div>
+                <div class="g3">
+                    <div class="pc" style="cursor:pointer" onclick="toast('📋 Job details opened')">
+                        <div class="pch">
+                            <div class="pav" style="background:#E8EDF8">🏠</div>
+                            <div>
+                                <div class="pn" style="font-size:14px">In-Home Support Worker</div>
+                                <div class="pty">Full-time · Suburb: Randwick</div>
+                            </div>
+                            <span class="ps sa">Open</span>
+                        </div>
+                        <div class="pgs"><span class="gt">Daily Living</span><span class="gt">Personal Care</span><span
+                                class="gt">Mobility</span></div>
+                        <div style="font-size:12px;color:var(--muted)">Posted 2 days ago · $32–$38/hr</div>
+                    </div>
+                    <div class="pc" style="cursor:pointer" onclick="toast('📋 Job details opened')">
+                        <div class="pch">
+                            <div class="pav" style="background:#FFE8EC">🧠</div>
+                            <div>
+                                <div class="pn" style="font-size:14px">Behaviour Support Practitioner</div>
+                                <div class="pty">Part-time · Remote / Office</div>
+                            </div>
+                            <span class="ps sr">Closing soon</span>
+                        </div>
+                        <div class="pgs"><span class="gt">Autism</span><span class="gt">PBS</span><span
+                                class="gt">Report Writing</span></div>
+                        <div style="font-size:12px;color:var(--muted)">Posted 5 days ago · $45–$55/hr</div>
+                    </div>
+                    <div class="pc" style="cursor:pointer" onclick="toast('📋 Job details opened')">
+                        <div class="pch">
+                            <div class="pav" style="background:#FEF3CD">🚗</div>
+                            <div>
+                                <div class="pn" style="font-size:14px">Community Access Support</div>
+                                <div class="pty">Casual · Flexible hours</div>
+                            </div>
+                            <span class="ps sa">Open</span>
+                        </div>
+                        <div class="pgs"><span class="gt">Transport</span><span class="gt">Social Skills</span><span
+                                class="gt">Recreation</span></div>
+                        <div style="font-size:12px;color:var(--muted)">Posted 1 week ago · $29–$34/hr</div>
+                    </div>
+                    <div class="pc" style="cursor:pointer" onclick="toast('📋 Job details opened')">
+                        <div class="pch">
+                            <div class="pav" style="background:#E8EDF8">💼</div>
+                            <div>
+                                <div class="pn" style="font-size:14px">NDIS Support Coordinator</div>
+                                <div class="pty">Full-time · Sydney CBD</div>
+                            </div>
+                            <span class="ps sa">Open</span>
+                        </div>
+                        <div class="pgs"><span class="gt">NDIS</span><span class="gt">Plan Management</span><span
+                                class="gt">Case Work</span></div>
+                        <div style="font-size:12px;color:var(--muted)">Posted 3 days ago · $70k–$85k</div>
+                    </div>
+                    <div class="pc" style="cursor:pointer" onclick="toast('📋 Job details opened')">
+                        <div class="pch">
+                            <div class="pav" style="background:#FFE8EC">🏋️</div>
+                            <div>
+                                <div class="pn" style="font-size:14px">Exercise Physiologist</div>
+                                <div class="pty">Part-time · Multiple sites</div>
+                            </div>
+                            <span class="ps sp">Applied</span>
+                        </div>
+                        <div class="pgs"><span class="gt">Physio</span><span class="gt">Allied Health</span><span
+                                class="gt">Rehab</span></div>
+                        <div style="font-size:12px;color:var(--muted)">Posted 1 week ago · $55–$65/hr</div>
+                    </div>
+                    <div class="pc" style="cursor:pointer" onclick="toast('📋 Job details opened')">
+                        <div class="pch">
+                            <div class="pav" style="background:#F0EAF8">🎓</div>
+                            <div>
+                                <div class="pn" style="font-size:14px">Early Childhood Support</div>
+                                <div class="pty">Casual · School hours</div>
+                            </div>
+                            <span class="ps sa">Open</span>
+                        </div>
+                        <div class="pgs"><span class="gt">Early Intervention</span><span class="gt">ECEI</span></div>
+                        <div style="font-size:12px;color:var(--muted)">Posted 4 days ago · $30–$36/hr</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AVAILABILITY -->
+            <div class="page" id="page-availability">
+                <div class="sh">
+                    <div class="stl">My Availability</div><button class="btn btn-p"
+                        onclick="toast('✅ Availability saved!')">Save Changes</button>
+                </div>
+                <div class="g2">
+                    <div class="card">
+                        <div class="ch">
+                            <div class="ct">Weekly Availability</div>
+                        </div>
+                        <style>
+                            .avrow {
+                                display: flex;
+                                align-items: center;
+                                justify-content: space-between;
+                                padding: 11px 0;
+                                border-bottom: 1px solid var(--sand)
+                            }
+
+                            .avrow:last-child {
+                                border-bottom: none
+                            }
+
+                            .avday {
+                                font-size: 14px;
+                                font-weight: 500;
+                                color: var(--dark);
+                                min-width: 90px
+                            }
+
+                            .avtimes {
+                                display: flex;
+                                gap: 7px;
+                                align-items: center;
+                                flex-wrap: wrap
+                            }
+                        </style>
+                        <div class="avrow">
+                            <div class="avday">Monday</div>
+                            <div class="avtimes"><input type="time" value="08:00"
+                                    style="padding:5px 8px;border:1.5px solid var(--sand);border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none"><span
+                                    style="color:var(--muted);font-size:12px">to</span><input type="time" value="17:00"
+                                    style="padding:5px 8px;border:1.5px solid var(--sand);border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none"><span
+                                    class="gt" style="color:var(--navy);background:#E8EDF8">Available</span></div>
+                        </div>
+                        <div class="avrow">
+                            <div class="avday">Tuesday</div>
+                            <div class="avtimes"><input type="time" value="08:00"
+                                    style="padding:5px 8px;border:1.5px solid var(--sand);border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none"><span
+                                    style="color:var(--muted);font-size:12px">to</span><input type="time" value="17:00"
+                                    style="padding:5px 8px;border:1.5px solid var(--sand);border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none"><span
+                                    class="gt" style="color:var(--navy);background:#E8EDF8">Available</span></div>
+                        </div>
+                        <div class="avrow">
+                            <div class="avday">Wednesday</div>
+                            <div class="avtimes"><input type="time" value="09:00"
+                                    style="padding:5px 8px;border:1.5px solid var(--sand);border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none"><span
+                                    style="color:var(--muted);font-size:12px">to</span><input type="time" value="13:00"
+                                    style="padding:5px 8px;border:1.5px solid var(--sand);border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none"><span
+                                    class="gt" style="color:#B8860B;background:#FEF3CD">Part day</span></div>
+                        </div>
+                        <div class="avrow">
+                            <div class="avday">Thursday</div>
+                            <div class="avtimes"><input type="time" value="08:00"
+                                    style="padding:5px 8px;border:1.5px solid var(--sand);border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none"><span
+                                    style="color:var(--muted);font-size:12px">to</span><input type="time" value="17:00"
+                                    style="padding:5px 8px;border:1.5px solid var(--sand);border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none"><span
+                                    class="gt" style="color:var(--navy);background:#E8EDF8">Available</span></div>
+                        </div>
+                        <div class="avrow">
+                            <div class="avday">Friday</div>
+                            <div class="avtimes"><input type="time" value="08:00"
+                                    style="padding:5px 8px;border:1.5px solid var(--sand);border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none"><span
+                                    style="color:var(--muted);font-size:12px">to</span><input type="time" value="17:00"
+                                    style="padding:5px 8px;border:1.5px solid var(--sand);border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none"><span
+                                    class="gt" style="color:var(--navy);background:#E8EDF8">Available</span></div>
+                        </div>
+                        <div class="avrow">
+                            <div class="avday">Saturday</div>
+                            <div class="avtimes"><span class="gt" style="color:var(--muted)">Unavailable</span><button
+                                    class="btn btn-o" style="font-size:12px;padding:4px 10px"
+                                    onclick="toast('Saturday availability added')">+ Add hours</button></div>
+                        </div>
+                        <div class="avrow">
+                            <div class="avday">Sunday</div>
+                            <div class="avtimes"><span class="gt" style="color:var(--muted)">Unavailable</span><button
+                                    class="btn btn-o" style="font-size:12px;padding:4px 10px"
+                                    onclick="toast('Sunday availability added')">+ Add hours</button></div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="ch">
+                            <div class="ct">Leave &amp; Unavailability</div><button class="btn btn-o"
+                                style="font-size:12px;padding:6px 11px" onclick="toast('📅 Leave request submitted')">+
+                                Request Leave</button>
+                        </div>
+                        <div class="ai g">
+                            <div class="atm">Mar 20</div>
+                            <div>
+                                <div class="atl">Annual Leave</div>
+                                <div class="asb">20–24 March · 5 days · Approved ✓</div>
+                            </div>
+                            <div class="atg" style="background:#E8F5E9;color:#2E7D32">Approved</div>
+                        </div>
+                        <div class="ai r">
+                            <div class="atm">Apr 8</div>
+                            <div>
+                                <div class="atl">Personal Leave</div>
+                                <div class="asb">8 April · 1 day · Pending</div>
+                            </div>
+                            <div class="atg" style="background:#FEF3CD;color:#B8860B">Pending</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SHIFT NOTIFICATIONS -->
+            <div class="page" id="page-shiftnotes">
+                <div class="sh">
+                    <div class="stl">Shift Notifications</div><button class="btn btn-o"
+                        onclick="toast('⚙️ Notification settings saved')">Settings</button>
+                </div>
+                <div class="card" style="margin-bottom:16px">
+                    <div class="ch">
+                        <div class="ct">New Shift Offers</div><span class="badge" style="background:var(--red)">3</span>
+                    </div>
+                    <div class="ai" style="border-left-color:var(--red)">
+                        <div class="atm" style="color:var(--red)">Today</div>
+                        <div style="flex:1">
+                            <div class="atl">🆕 Shift Available: Marcus — Daily Living, 9 AM Wed</div>
+                            <div class="asb">Home visit · 60 min · $58.40</div>
+                        </div>
+                        <div style="display:flex;gap:6px"><button class="btn btn-p"
+                                style="font-size:12px;padding:5px 10px"
+                                onclick="toast('✅ Shift accepted!')">Accept</button><button class="btn btn-o"
+                                style="font-size:12px;padding:5px 10px"
+                                onclick="toast('❌ Shift declined')">Decline</button></div>
+                    </div>
+                    <div class="ai" style="border-left-color:var(--red)">
+                        <div class="atm" style="color:var(--red)">Today</div>
+                        <div style="flex:1">
+                            <div class="atl">🆕 Shift Available: Thomas — OT Review, 2 PM Thu</div>
+                            <div class="asb">Office · 90 min · $87.60</div>
+                        </div>
+                        <div style="display:flex;gap:6px"><button class="btn btn-p"
+                                style="font-size:12px;padding:5px 10px"
+                                onclick="toast('✅ Shift accepted!')">Accept</button><button class="btn btn-o"
+                                style="font-size:12px;padding:5px 10px"
+                                onclick="toast('❌ Shift declined')">Decline</button></div>
+                    </div>
+                    <div class="ai" style="border-left-color:#C9962E">
+                        <div class="atm">Yesterday</div>
+                        <div style="flex:1">
+                            <div class="atl">🆕 Shift Available: Sophie — Community Access, Sat AM</div>
+                            <div class="asb">Community · 120 min · Weekend rate</div>
+                        </div>
+                        <div style="display:flex;gap:6px"><button class="btn btn-p"
+                                style="font-size:12px;padding:5px 10px"
+                                onclick="toast('✅ Shift accepted!')">Accept</button><button class="btn btn-o"
+                                style="font-size:12px;padding:5px 10px"
+                                onclick="toast('❌ Shift declined')">Decline</button></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="ch">
+                        <div class="ct">Shift Change Alerts</div>
+                    </div>
+                    <div class="ai" style="border-left-color:#4A7FA5">
+                        <div class="atm">2h ago</div>
+                        <div>
+                            <div class="atl">⏰ Time change: Aisha — 10:00 AM → 10:30 AM (Tue)</div>
+                            <div class="asb">Rescheduled by Dr. Yuen</div>
+                        </div>
+                        <div class="atg">Updated</div>
+                    </div>
+                    <div class="ai" style="border-left-color:var(--navy)">
+                        <div class="atm">Yesterday</div>
+                        <div>
+                            <div class="atl">📍 Location change: Team Meeting → Zoom (Fri)</div>
+                            <div class="asb">Changed from Office to online</div>
+                        </div>
+                        <div class="atg">Updated</div>
+                    </div>
+                    <div class="ai" style="border-left-color:var(--muted)">
+                        <div class="atm">2 days ago</div>
+                        <div>
+                            <div class="atl">❌ Shift cancelled: Sophie — Vocational Tour (Last Thu)</div>
+                            <div class="asb">Participant unavailable</div>
+                        </div>
+                        <div class="atg" style="background:#FFE8EC;color:var(--red3)">Cancelled</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MY FORMS -->
+            <div class="page" id="page-forms">
+                <div class="sh">
+                    <div class="stl">My Forms</div><button class="btn btn-p" onclick="toast('📝 New form started')">+
+                        Start New Form</button>
+                </div>
+                <div class="card" style="margin-bottom:16px">
+                    <div class="ch">
+                        <div class="ct">Pending Forms</div><span class="badge">2</span>
+                    </div>
+                    <div class="ai" style="border-left-color:var(--red)">
+                        <div class="atm" style="color:var(--red)">Due today</div>
+                        <div>
+                            <div class="atl">📝 Incident Report — Marcus Johnson</div>
+                            <div class="asb">Home visit · 10 Mar 2026 · Started</div>
+                        </div><button class="btn btn-p" style="font-size:12px;padding:5px 10px"
+                            onclick="toast('📝 Form opened')">Continue</button>
+                    </div>
+                    <div class="ai" style="border-left-color:#C9962E">
+                        <div class="atm">Due Fri</div>
+                        <div>
+                            <div class="atl">📋 Progress Note — Aisha Okonkwo</div>
+                            <div class="asb">Speech Therapy session · Not started</div>
+                        </div><button class="btn btn-o" style="font-size:12px;padding:5px 10px"
+                            onclick="toast('📝 Form started')">Start</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="ch">
+                        <div class="ct">Completed Forms</div>
+                    </div>
+                    <div class="ai" style="border-left-color:var(--navy)">
+                        <div class="atm">9 Mar</div>
+                        <div>
+                            <div class="atl">✅ Progress Note — Thomas Kato</div>
+                            <div class="asb">OT Assessment · Submitted</div>
+                        </div>
+                        <div class="atg">Submitted</div>
+                    </div>
+                    <div class="ai" style="border-left-color:var(--navy)">
+                        <div class="atm">7 Mar</div>
+                        <div>
+                            <div class="atl">✅ Risk Assessment — Sophie Marchand</div>
+                            <div class="asb">Vocational Tour · Submitted</div>
+                        </div>
+                        <div class="atg">Submitted</div>
+                    </div>
+                    <div class="ai" style="border-left-color:var(--navy)">
+                        <div class="atm">5 Mar</div>
+                        <div>
+                            <div class="atl">✅ Support Plan Review — Marcus Johnson</div>
+                            <div class="asb">Annual review · Submitted &amp; approved</div>
+                        </div>
+                        <div class="atg">Approved</div>
+                    </div>
+                    <div class="ai" style="border-left-color:#C9962E">
+                        <div class="atm">1 Mar</div>
+                        <div>
+                            <div class="atl">⏳ NDIS Goal Update — Aisha Okonkwo</div>
+                            <div class="asb">Communication goals · Under review</div>
+                        </div>
+                        <div class="atg" style="background:#FEF3CD;color:#B8860B">In Review</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MY TIMESHEET -->
+            <div class="page" id="page-timesheet">
+                <div class="sh">
+                    <div class="stl">My Timesheet</div>
+                    <div style="display:flex;gap:7px"><button class="btn btn-o"
+                            onclick="toast('📥 Timesheet exported')">Export PDF</button><button class="btn btn-p"
+                            onclick="toast('✅ Timesheet submitted!')">Submit</button></div>
+                </div>
+                <div class="g2" style="margin-bottom:16px">
+                    <div class="scard">
+                        <div class="slbl">Hours This Week</div>
+                        <div class="sval">38.5</div>
+                        <div class="ssub"><span class="sdot" style="background:var(--navy)"></span>Target: 40 hrs</div>
+                    </div>
+                    <div class="scard">
+                        <div class="slbl">Hours This Month</div>
+                        <div class="sval">152</div>
+                        <div class="ssub"><span class="sdot" style="background:var(--red)"></span>+8 from last month
+                        </div>
+                    </div>
+                    <div class="scard">
+                        <div class="slbl">Pending Approval</div>
+                        <div class="sval">2</div>
+                        <div class="ssub"><span class="sdot" style="background:#C9962E)"></span>Awaiting sign-off</div>
+                    </div>
+                    <div class="scard">
+                        <div class="slbl">Approved This Month</div>
+                        <div class="sval">144</div>
+                        <div class="ssub"><span class="sdot" style="background:#2E7D32"></span>hrs approved</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="ch">
+                        <div class="ct">Week of 10–16 March 2026</div>
+                    </div>
+                    <table style="width:100%;border-collapse:collapse;font-size:13px">
+                        <thead>
+                            <tr style="background:var(--bg)">
+                                <th
+                                    style="padding:9px 12px;text-align:left;font-weight:600;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--sand)">
+                                    Date</th>
+                                <th
+                                    style="padding:9px 12px;text-align:left;font-weight:600;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--sand)">
+                                    Participant</th>
+                                <th
+                                    style="padding:9px 12px;text-align:left;font-weight:600;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--sand)">
+                                    Activity</th>
+                                <th
+                                    style="padding:9px 12px;text-align:right;font-weight:600;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--sand)">
+                                    Hours</th>
+                                <th
+                                    style="padding:9px 12px;text-align:center;font-weight:600;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--sand)">
+                                    Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom:1px solid var(--sand)">
+                                <td style="padding:10px 12px;color:var(--mid)">Mon 11 Mar</td>
+                                <td style="padding:10px 12px;font-weight:500">Marcus Johnson</td>
+                                <td style="padding:10px 12px;color:var(--mid)">Daily Living Skills</td>
+                                <td style="padding:10px 12px;text-align:right;font-weight:600;color:var(--navy)">1.0
+                                </td>
+                                <td style="padding:10px 12px;text-align:center"><span class="gt"
+                                        style="background:#E8EDF8;color:var(--navy)">Pending</span></td>
+                            </tr>
+                            <tr style="border-bottom:1px solid var(--sand)">
+                                <td style="padding:10px 12px;color:var(--mid)">Mon 11 Mar</td>
+                                <td style="padding:10px 12px;font-weight:500">Team / Internal</td>
+                                <td style="padding:10px 12px;color:var(--mid)">Planning Meeting</td>
+                                <td style="padding:10px 12px;text-align:right;font-weight:600;color:var(--navy)">0.75
+                                </td>
+                                <td style="padding:10px 12px;text-align:center"><span class="gt"
+                                        style="background:#E8EDF8;color:var(--navy)">Pending</span></td>
+                            </tr>
+                            <tr style="border-bottom:1px solid var(--sand)">
+                                <td style="padding:10px 12px;color:var(--mid)">Tue 12 Mar</td>
+                                <td style="padding:10px 12px;font-weight:500">Aisha Okonkwo</td>
+                                <td style="padding:10px 12px;color:var(--mid)">Speech Therapy Support</td>
+                                <td style="padding:10px 12px;text-align:right;font-weight:600;color:var(--navy)">1.0
+                                </td>
+                                <td style="padding:10px 12px;text-align:center"><span class="gt"
+                                        style="background:#E8F5E9;color:#2E7D32">Approved</span></td>
+                            </tr>
+                            <tr style="border-bottom:1px solid var(--sand)">
+                                <td style="padding:10px 12px;color:var(--mid)">Wed 13 Mar</td>
+                                <td style="padding:10px 12px;font-weight:500">Thomas Kato</td>
+                                <td style="padding:10px 12px;color:var(--mid)">OT Assessment</td>
+                                <td style="padding:10px 12px;text-align:right;font-weight:600;color:var(--navy)">1.5
+                                </td>
+                                <td style="padding:10px 12px;text-align:center"><span class="gt"
+                                        style="background:#E8F5E9;color:#2E7D32">Approved</span></td>
+                            </tr>
+                            <tr>
+                                <td style="padding:10px 12px;color:var(--mid)">Thu 14 Mar</td>
+                                <td style="padding:10px 12px;font-weight:500">Sophie Marchand</td>
+                                <td style="padding:10px 12px;color:var(--mid)">Vocational Tour</td>
+                                <td style="padding:10px 12px;text-align:right;font-weight:600;color:var(--navy)">1.0
+                                </td>
+                                <td style="padding:10px 12px;text-align:center"><span class="gt"
+                                        style="background:#E8F5E9;color:#2E7D32">Approved</span></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr style="background:var(--bg)">
+                                <td colspan="3" style="padding:10px 12px;font-weight:600;color:var(--dark)">Week Total
+                                </td>
+                                <td
+                                    style="padding:10px 12px;text-align:right;font-weight:700;color:var(--navy);font-size:15px">
+                                    5.25</td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+
+            <!-- MY DOCUMENTS -->
+            <div class="page" id="page-mydocs">
+                <div class="sh">
+                    <div class="stl">My Documents</div><button class="btn btn-o"
+                        onclick="toast('📤 Upload opened')">Upload</button>
+                </div>
+                <div class="rg">
+                    <div class="rc" onclick="toast('📄 Opening document…')">
+                        <div class="rth" style="background:#E8EDF8">📄</div>
+                        <div class="rb">
+                            <div class="rcat">Certificate</div>
+                            <div class="rtl">NDIS Worker Orientation Module</div>
+                            <div class="rdc">Completed 15 Jan 2026 · Valid until 2028</div>
+                        </div>
+                    </div>
+                    <div class="rc" onclick="toast('📄 Opening document…')">
+                        <div class="rth" style="background:#FFE8EC">🛡️</div>
+                        <div class="rb">
+                            <div class="rcat">Compliance</div>
+                            <div class="rtl">Working With Children Check</div>
+                            <div class="rdc">WWC1234567E · Expires Mar 2028</div>
+                        </div>
+                    </div>
+                    <div class="rc" onclick="toast('📄 Opening document…')">
+                        <div class="rth" style="background:#FEF3CD">🚑</div>
+                        <div class="rb">
+                            <div class="rcat">First Aid</div>
+                            <div class="rtl">Senior First Aid Certificate</div>
+                            <div class="rdc">Completed 10 Sep 2025 · Expires Sep 2027</div>
+                        </div>
+                    </div>
+                    <div class="rc" onclick="toast('📄 Opening document…')">
+                        <div class="rth" style="background:#E8EDF8">📋</div>
+                        <div class="rb">
+                            <div class="rcat">Training</div>
+                            <div class="rtl">Manual Handling Certificate</div>
+                            <div class="rdc">Completed 20 Feb 2026 · Valid 2 years</div>
+                        </div>
+                    </div>
+                    <div class="rc" onclick="toast('📄 Opening document…')">
+                        <div class="rth" style="background:#FFE8EC">🪪</div>
+                        <div class="rb">
+                            <div class="rcat">Identity</div>
+                            <div class="rtl">Employee ID &amp; Photo Card</div>
+                            <div class="rdc">Issued 1 Jul 2024 · Active</div>
+                        </div>
+                    </div>
+                    <div class="rc" onclick="toast('📄 Opening document…')">
+                        <div class="rth" style="background:#E8EDF8">📝</div>
+                        <div class="rb">
+                            <div class="rcat">Contract</div>
+                            <div class="rtl">Employment Contract</div>
+                            <div class="rdc">Full-time · Signed 1 Jul 2024</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DOCUMENTS HUB -->
+            <div class="page" id="page-dochub">
+                <div class="sh">
+                    <div class="stl">Documents Hub</div>
+                    <div style="display:flex;gap:7px"><button class="btn btn-o">Upload Resource</button><button
+                            class="btn btn-p" onclick="toast('📁 New folder created')">+ New Folder</button></div>
+                </div>
+                <div class="g3" style="margin-bottom:16px">
+                    <div class="qc" onclick="toast('📁 Opening NDIS Policies…')">
+                        <div class="qi" style="background:#E8EDF8">📁</div>
+                        <div class="qn">NDIS Policies &amp; Procedures</div>
+                        <div class="qd">12 documents · Last updated 5 Mar 2026</div>
+                    </div>
+                    <div class="qc" onclick="toast('📁 Opening Templates…')">
+                        <div class="qi" style="background:#FFE8EC">📁</div>
+                        <div class="qn">Forms &amp; Templates</div>
+                        <div class="qd">28 documents · Last updated 1 Mar 2026</div>
+                    </div>
+                    <div class="qc" onclick="toast('📁 Opening Training…')">
+                        <div class="qi" style="background:#FEF3CD">📁</div>
+                        <div class="qn">Training Materials</div>
+                        <div class="qd">9 documents · Last updated 15 Feb 2026</div>
+                    </div>
+                    <div class="qc" onclick="toast('📁 Opening Participant Files…')">
+                        <div class="qi" style="background:#E8EDF8">📁</div>
+                        <div class="qn">Participant Files</div>
+                        <div class="qd">4 folders · Private &amp; confidential</div>
+                    </div>
+                    <div class="qc" onclick="toast('📁 Opening Incident Reports…')">
+                        <div class="qi" style="background:#FFE8EC">📁</div>
+                        <div class="qn">Incident Reports</div>
+                        <div class="qd">3 documents · Last updated 10 Mar 2026</div>
+                    </div>
+                    <div class="qc" onclick="toast('📁 Opening HR Documents…')">
+                        <div class="qi" style="background:#E8EDF8">📁</div>
+                        <div class="qn">HR Documents</div>
+                        <div class="qd">6 documents · Contracts, pay, leave</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="ch">
+                        <div class="ct">Recently Updated</div>
+                    </div>
+                    <div class="ai">
+                        <div class="atm" style="min-width:72px">10 Mar</div>
+                        <div>
+                            <div class="atl">📄 Incident Report Template v3.docx</div>
+                            <div class="asb">Forms &amp; Templates · Updated by Amy Walsh</div>
+                        </div>
+                        <div class="atg" style="cursor:pointer" onclick="toast('📥 Downloading…')">Download</div>
+                    </div>
+                    <div class="ai" style="border-left-color:var(--red)">
+                        <div class="atm" style="min-width:72px">8 Mar</div>
+                        <div>
+                            <div class="atl">📄 2026 NDIS Practice Standards Update.pdf</div>
+                            <div class="asb">NDIS Policies · New version available</div>
+                        </div>
+                        <div class="atg" style="cursor:pointer;background:#FFE8EC;color:var(--red3)"
+                            onclick="toast('📥 Downloading…')">Download</div>
+                    </div>
+                    <div class="ai" style="border-left-color:#C9962E">
+                        <div class="atm" style="min-width:72px">5 Mar</div>
+                        <div>
+                            <div class="atl">📄 Manual Handling Refresher Slides.pptx</div>
+                            <div class="asb">Training Materials · March 2026 session</div>
+                        </div>
+                        <div class="atg" style="cursor:pointer;background:#FEF3CD;color:#B8860B"
+                            onclick="toast('📥 Downloading…')">Download</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- OFFLINE SETTINGS -->
+            <div class="page" id="page-offline">
+                <div class="sh">
+                    <div class="stl">Offline Settings</div>
+                </div>
+                <div class="g2">
+                    <div class="card">
+                        <div class="ch">
+                            <div class="ct">Offline Mode</div>
+                        </div>
+                        <div style="text-align:center;padding:20px 0 14px">
+                            <div style="font-size:48px;margin-bottom:10px">📶</div>
+                            <div style="font-size:15px;font-weight:600;color:var(--dark);margin-bottom:4px">Currently
+                                Online</div>
+                            <div style="font-size:13px;color:var(--muted)">All data is syncing in real-time.</div>
+                        </div>
+                        <div class="ti" style="padding:12px 0">
+                            <div class="tt">
+                                <div class="tn" style="font-size:14px;font-weight:500">Enable Offline Mode</div>
+                                <div class="tm">Cache data locally for use without internet</div>
+                            </div>
+                            <div style="width:42px;height:23px;background:var(--sand);border-radius:11px;cursor:pointer;position:relative"
+                                onclick="sw(this);toast('📶 Offline mode toggled')">
+                                <div
+                                    style="width:19px;height:19px;background:#fff;border-radius:50%;position:absolute;top:2px;left:2px">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ti" style="padding:12px 0">
+                            <div class="tt">
+                                <div class="tn" style="font-size:14px;font-weight:500">Auto-sync on reconnect</div>
+                                <div class="tm">Automatically upload changes when back online</div>
+                            </div>
+                            <div style="width:42px;height:23px;background:var(--navy);border-radius:11px;cursor:pointer;position:relative"
+                                onclick="sw(this)">
+                                <div
+                                    style="width:19px;height:19px;background:#fff;border-radius:50%;position:absolute;top:2px;right:2px">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ti" style="padding:12px 0;border-bottom:none">
+                            <div class="tt">
+                                <div class="tn" style="font-size:14px;font-weight:500">Background sync</div>
+                                <div class="tm">Sync data even when app is not open</div>
+                            </div>
+                            <div style="width:42px;height:23px;background:var(--navy);border-radius:11px;cursor:pointer;position:relative"
+                                onclick="sw(this)">
+                                <div
+                                    style="width:19px;height:19px;background:#fff;border-radius:50%;position:absolute;top:2px;right:2px">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="ch">
+                            <div class="ct">Cached Data</div><button class="btn btn-o"
+                                style="font-size:12px;padding:6px 11px" onclick="toast('🗑 Cache cleared')">Clear
+                                Cache</button>
+                        </div>
+                        <div class="ai">
+                            <div class="atm" style="min-width:72px">Support Plans</div>
+                            <div>
+                                <div class="atl">4 plans cached</div>
+                                <div class="asb">Last synced: just now</div>
+                            </div>
+                            <div class="atg">2.1 MB</div>
+                        </div>
+                        <div class="ai" style="border-left-color:#C9962E">
+                            <div class="atm" style="min-width:72px">Calendar</div>
+                            <div>
+                                <div class="atl">12 appointments cached</div>
+                                <div class="asb">Last synced: 5 mins ago</div>
+                            </div>
+                            <div class="atg" style="background:#FEF3CD;color:#B8860B">0.4 MB</div>
+                        </div>
+                        <div class="ai" style="border-left-color:var(--navy)">
+                            <div class="atm" style="min-width:72px">Documents</div>
+                            <div>
+                                <div class="atl">8 documents cached</div>
+                                <div class="asb">Last synced: 1 hour ago</div>
+                            </div>
+                            <div class="atg" style="background:#E8EDF8;color:var(--navy)">18.7 MB</div>
+                        </div>
+                        <div
+                            style="margin-top:14px;padding:12px;background:var(--bg);border-radius:9px;font-size:13px;color:var(--muted)">
+                            Total cache: <strong style="color:var(--dark)">21.2 MB</strong> of 100 MB limit used</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ABOUT -->
+            <div class="page" id="page-about">
+                <div class="sh">
+                    <div class="stl">About</div>
+                </div>
+                <div class="g2">
+                    <div class="card">
+                        <div style="text-align:center;padding:28px 0 20px">
+                            <div
+                                style="font-family:'Fraunces',serif;font-size:24px;font-weight:700;color:var(--dark);margin-bottom:4px">
+                                Wollongong Health </div>
+                            <div style="font-size:13px;color:var(--muted);margin-bottom:16px">Disability Support Hub
+                            </div>
+                            <div class="gt" style="display:inline-block;margin-bottom:20px">Version 2.4.1 · March 2026
+                            </div>
+                        </div>
+                        <div class="ti" style="padding:12px 0">
+                            <div class="tt">
+                                <div class="tn">Platform</div>
+                            </div>
+                            <div style="font-size:13px;color:var(--mid);font-weight:500">Web App (PWA)</div>
+                        </div>
+                        <div class="ti" style="padding:12px 0">
+                            <div class="tt">
+                                <div class="tn">Last Updated</div>
+                            </div>
+                            <div style="font-size:13px;color:var(--mid);font-weight:500">11 March 2026</div>
+                        </div>
+                        <div class="ti" style="padding:12px 0">
+                            <div class="tt">
+                                <div class="tn">Data Region</div>
+                            </div>
+                            <div style="font-size:13px;color:var(--mid);font-weight:500">Australia (ap-southeast-2)
+                            </div>
+                        </div>
+                        <div class="ti" style="padding:12px 0;border-bottom:none">
+                            <div class="tt">
+                                <div class="tn">Compliance</div>
+                            </div>
+                            <div style="font-size:13px;color:var(--mid);font-weight:500">NDIS · Privacy Act 1988</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="ch">
+                            <div class="ct">Support &amp; Legal</div>
+                        </div>
+                        <div class="qc" style="margin-bottom:10px;flex-direction:row;align-items:center;gap:12px"
+                            onclick="toast('📧 Opening support email…')">
+                            <div class="qi" style="background:#E8EDF8;flex-shrink:0">📧</div>
+                            <div>
+                                <div class="qn" style="font-size:13px">Contact Support</div>
+                                <div class="qd">support@abledtogether.com.au</div>
+                            </div>
+                        </div>
+                        <div class="qc" style="margin-bottom:10px;flex-direction:row;align-items:center;gap:12px"
+                            onclick="toast('📖 Opening Help Centre…')">
+                            <div class="qi" style="background:#FFE8EC;flex-shrink:0">📖</div>
+                            <div>
+                                <div class="qn" style="font-size:13px">Help Centre</div>
+                                <div class="qd">Guides, FAQs and tutorials</div>
+                            </div>
+                        </div>
+                        <div class="qc" style="margin-bottom:10px;flex-direction:row;align-items:center;gap:12px"
+                            onclick="toast('🔒 Opening Privacy Policy…')">
+                            <div class="qi" style="background:#E8EDF8;flex-shrink:0">🔒</div>
+                            <div>
+                                <div class="qn" style="font-size:13px">Privacy Policy</div>
+                                <div class="qd">How we handle your data</div>
+                            </div>
+                        </div>
+                        <div class="qc" style="flex-direction:row;align-items:center;gap:12px"
+                            onclick="toast('📜 Opening Terms…')">
+                            <div class="qi" style="background:#FEF3CD;flex-shrink:0">📜</div>
+                            <div>
+                                <div class="qn" style="font-size:13px">Terms of Service</div>
+                                <div class="qd">Platform usage terms</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- PLAN MODAL -->
+    <div class="mo" id="planmo" onclick="if(event.target===this)closePlanModal()">
+        <div class="modal">
+            <div class="mtit">New Support Plan</div>
+            <div class="msub">Create a new participant support plan</div>
+            <div class="fg"><label class="fl">Participant Name</label><input class="fi" type="text"
+                    placeholder="Full name"></div>
+            <div class="fg"><label class="fl">Disability Type</label><select class="fsel">
+                    <option>Physical Disability</option>
+                    <option>Intellectual Disability</option>
+                    <option>Autism Spectrum</option>
+                    <option>Acquired Brain Injury</option>
+                    <option>Psychosocial Disability</option>
+                    <option>Sensory Impairment</option>
+                </select></div>
+            <div class="fg"><label class="fl">Support Coordinator</label><select class="fsel">
+                    <option>Sarah Chen</option>
+                    <option>Amy Walsh</option>
+                    <option>Dr. David Yuen</option>
+                </select></div>
+            <div class="fg"><label class="fl">Plan Start Date</label><input class="fi" type="date"></div>
+            <div class="mf"><button class="btn btn-o" onclick="closePlanModal()">Cancel</button><button
+                    class="btn btn-p" onclick="closePlanModal();toast('🎉 Support plan created successfully!')">Create
+                    Plan</button></div>
+        </div>
+    </div>
+
+    <!-- APPT MODAL -->
+    <div class="amo" id="apptmo" onclick="if(event.target===this)closeApptModal()">
+        <div class="amodal">
+            <div class="mtit">New Appointment</div>
+            <div class="msub">Add to your calendar</div>
+            <div class="fg"><label class="fl">Title</label><input class="fi" id="atit" type="text"
+                    placeholder="e.g. Marcus — Daily Living Skills"></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:11px">
+                <div class="fg"><label class="fl">Date</label><input class="fi" id="adate" type="date"></div>
+                <div class="fg"><label class="fl">Time</label><input class="fi" id="atime" type="time" value="09:00">
+                </div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:11px">
+                <div class="fg"><label class="fl">Duration</label><select class="fsel" id="adur">
+                        <option value="30">30 min</option>
+                        <option value="60" selected>1 hour</option>
+                        <option value="90">1.5 hours</option>
+                        <option value="120">2 hours</option>
+                    </select></div>
+                <div class="fg"><label class="fl">Type</label><select class="fsel" id="atype">
+                        <option value="inperson">In-person</option>
+                        <option value="online">Online</option>
+                        <option value="assessment">Assessment</option>
+                        <option value="therapy">Therapy</option>
+                        <option value="internal">Internal</option>
+                    </select></div>
+            </div>
+            <div class="fg"><label class="fl">Location / Notes</label><input class="fi" id="aloc" type="text"
+                    placeholder="e.g. Home visit · Sarah Chen"></div>
+            <div class="fg"><label class="fl">Participant</label><select class="fsel" id="apart">
+                    <option value="">— Select participant —</option>
+                    <option>Marcus Johnson</option>
+                    <option>Aisha Okonkwo</option>
+                    <option>Thomas Kato</option>
+                    <option>Sophie Marchand</option>
+                    <option>Team / Internal</option>
+                </select></div>
+            <div class="mf"><button class="btn btn-o" onclick="closeApptModal()">Cancel</button><button
+                    class="btn btn-p" onclick="saveAppt()">Save Appointment</button></div>
+        </div>
+    </div>
+
+    <div class="toast" id="toastEl"></div>
+
+    <script>
+        // SIDEBAR
+        function toggleSB() { document.getElementById('sidebar').classList.toggle('open'); document.getElementById('overlay').classList.toggle('open') }
+        function closeSB() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('open') }
+
+        // PAGES
+        const PG = { dashboard: 'Dashboard', plans: 'Support Plans', appointments: 'Appointments', goals: 'Goals & Progress', communication: 'Communication Tools', resources: 'Resource Library', team: 'Care Team', reports: 'Reports & Analytics', settings: 'Settings', notifications: 'Notifications', schedule: 'My Schedule', messaging: 'Messaging', jobboard: 'Job Board', availability: 'Availability', shiftnotes: 'Shift Notifications', forms: 'My Forms', timesheet: 'My Timesheet', mydocs: 'My Documents', dochub: 'Documents Hub', offline: 'Offline Settings', about: 'About' };
+        function go(id, el) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('page-' + id).classList.add('active');
+            document.getElementById('ptitle').textContent = PG[id];
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            if (el) el.classList.add('active');
+            if (id === 'appointments') renderCal();
+            closeSB();
+        }
+
+        function tk(el) { const n = el.nextElementSibling.querySelector('.tn'); if (el.classList.contains('done')) { el.classList.remove('done'); el.textContent = ''; n.classList.remove('done') } else { el.classList.add('done'); el.textContent = '✓'; n.classList.add('done') } }
+        function openPlanModal() { document.getElementById('planmo').classList.add('open') }
+        function closePlanModal() { document.getElementById('planmo').classList.remove('open') }
+        function sw(el) { const d = el.querySelector('div'); if (el.style.background.includes('var(--navy)') || el.style.background === '') { el.style.background = 'var(--sand)'; d.style.right = ''; d.style.left = '2px' } else { el.style.background = 'var(--navy)'; d.style.left = ''; d.style.right = '2px' } }
+
+        let tt;
+        function toast(m) { const t = document.getElementById('toastEl'); t.textContent = m; t.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => t.classList.remove('show'), 3200) }
+
+        // AAC
+        let aacW = [];
+        function addAAC(w) { aacW.push(w); document.getElementById('aac-ph').style.display = 'none'; document.getElementById('aac-txt').textContent = aacW.join(' ') }
+        function clearAAC() { aacW = []; document.getElementById('aac-txt').textContent = ''; document.getElementById('aac-ph').style.display = '' }
+        function speakAAC() { const t = aacW.join(' '); if (!t) { toast('Tap buttons to build a message first'); return } if ('speechSynthesis' in window) { const u = new SpeechSynthesisUtterance(t.replace(/[^\w\s]/g, '')); u.rate = .85; speechSynthesis.speak(u) } toast('🔊 Speaking: "' + t.replace(/[^\w\s]/g, '') + '"') }
+
+        // CALENDAR
+        const TODAY = new Date();
+        let cY = TODAY.getFullYear(), cM = TODAY.getMonth(), cView = 'month', selD = null;
+        let wkStart = new Date(TODAY); wkStart.setDate(TODAY.getDate() - TODAY.getDay());
+
+        const TC = { inperson: { bg: '#DDEEF8', fg: '#1A3A6A', bar: '#4A7FA5' }, online: { bg: '#E8EDF8', fg: '#012169', bar: '#012169' }, assessment: { bg: '#FEF0CD', fg: '#8A6000', bar: '#C9962E' }, internal: { bg: '#FFE8EC', fg: '#B8001F', bar: '#E4002B' }, therapy: { bg: '#F0EAF8', fg: '#4A2080', bar: '#7B50C0' } };
+
+        function md(off, h, m = 0) { const d = new Date(TODAY); d.setDate(TODAY.getDate() + off); d.setHours(h, m, 0, 0); return d }
+        let appts = [
+            { id: 1, title: 'Marcus — Daily Living Skills', start: md(0, 9), dur: 60, type: 'inperson', loc: 'Home visit · Sarah Chen', pt: 'Marcus Johnson' },
+            { id: 2, title: 'Team Planning Meeting', start: md(0, 14), dur: 45, type: 'internal', loc: 'Office · Full team', pt: 'Team / Internal' },
+            { id: 3, title: 'Aisha — Speech Therapy', start: md(1, 10), dur: 60, type: 'therapy', loc: 'Clinic · Dr. Yuen', pt: 'Aisha Okonkwo' },
+            { id: 4, title: 'Thomas — OT Assessment', start: md(2, 13), dur: 90, type: 'assessment', loc: 'Home · Amy Walsh, OT', pt: 'Thomas Kato' },
+            { id: 5, title: 'Sophie — Vocational Tour', start: md(3, 15), dur: 60, type: 'inperson', loc: 'Community', pt: 'Sophie Marchand' },
+            { id: 6, title: 'NDIS Review — Marcus', start: md(4, 11), dur: 90, type: 'online', loc: 'Zoom · Planner + family', pt: 'Marcus Johnson' },
+            { id: 7, title: 'Aisha — Sensory Therapy', start: md(7, 10, 30), dur: 60, type: 'therapy', loc: 'Clinic · Dr. Yuen', pt: 'Aisha Okonkwo' },
+            { id: 8, title: 'Support Worker Training', start: md(8, 9), dur: 120, type: 'internal', loc: 'Office · All staff', pt: 'Team / Internal' },
+            { id: 9, title: 'Thomas — Home Modification', start: md(9, 14), dur: 60, type: 'assessment', loc: 'Home · OT + builder', pt: 'Thomas Kato' },
+            { id: 10, title: 'Sophie — Plan Review', start: md(14, 10), dur: 60, type: 'online', loc: 'Zoom · Sarah + family', pt: 'Sophie Marchand' },
+            { id: 11, title: 'Marcus — Employment Support', start: md(-3, 9), dur: 60, type: 'inperson', loc: 'Café · barista training', pt: 'Marcus Johnson' },
+            { id: 12, title: 'NDIS Coordinator Webinar', start: md(-1, 12), dur: 90, type: 'online', loc: 'Online event', pt: 'Team / Internal' },
+        ];
+        let nid = 20;
+
+        function ft(d) { let h = d.getHours(), m = d.getMinutes(); const ap = h >= 12 ? 'PM' : 'AM'; h = h % 12 || 12; return `${h}:${m.toString().padStart(2, '0')} ${ap}` }
+        function sd(a, b) { return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate() }
+        function abd(d) { return appts.filter(a => sd(a.start, d)).sort((a, b) => a.start - b.start) }
+
+        function renderMonth() {
+            document.getElementById('cmlbl').textContent = new Date(cY, cM).toLocaleDateString('en-AU', { month: 'long', year: 'numeric' });
+            const g = document.getElementById('cgrid'); g.innerHTML = '';
+            const fd = new Date(cY, cM, 1).getDay(), dim = new Date(cY, cM + 1, 0).getDate(), pd = new Date(cY, cM, 0).getDate();
+            let cells = [];
+            for (let i = fd - 1; i >= 0; i--)cells.push({ d: new Date(cY, cM - 1, pd - i), cur: false });
+            for (let i = 1; i <= dim; i++)cells.push({ d: new Date(cY, cM, i), cur: true });
+            const rem = 42 - cells.length;
+            for (let i = 1; i <= rem; i++)cells.push({ d: new Date(cY, cM + 1, i), cur: false });
+            cells.forEach(({ d, cur }) => {
+                const c = document.createElement('div'); c.className = 'ccell';
+                if (!cur) c.classList.add('om');
+                if (d.getDay() === 0 || d.getDay() === 6) c.classList.add('wknd');
+                if (sd(d, TODAY)) c.classList.add('today');
+                if (selD && sd(d, selD)) c.classList.add('sel');
+                const dn = document.createElement('div'); dn.className = 'cdn'; dn.textContent = d.getDate(); c.appendChild(dn);
+                const ev = abd(d);
+                ev.slice(0, 2).forEach(e => {
+                    const t = TC[e.type] || TC.inperson;
+                    const el = document.createElement('div'); el.className = 'cev';
+                    el.style.cssText = `background:${t.bg};color:${t.fg}`;
+                    el.textContent = ft(e.start) + ' ' + e.title;
+                    el.onclick = x => { x.stopPropagation(); showDay(d) }; c.appendChild(el);
+                });
+                if (ev.length > 2) { const m = document.createElement('div'); m.className = 'cmor'; m.textContent = `+${ev.length - 2} more`; m.onclick = x => { x.stopPropagation(); showDay(d) }; c.appendChild(m) }
+                c.onclick = () => { selD = new Date(d); renderMonth(); showDay(d) };
+                g.appendChild(c);
+            });
+        }
+
+        function renderWeek() {
+            const ws = new Date(wkStart), we = new Date(ws); we.setDate(ws.getDate() + 6);
+            document.getElementById('cmlbl').textContent = ws.toLocaleDateString('en-AU', { month: 'short', day: 'numeric' }) + ' – ' + we.toLocaleDateString('en-AU', { month: 'short', day: 'numeric', year: 'numeric' });
+            const g = document.getElementById('wgrid'); g.innerHTML = '';
+            const sp = document.createElement('div'); sp.style.cssText = 'border-right:1px solid var(--sand);border-bottom:1px solid var(--sand);background:var(--bg)'; g.appendChild(sp);
+            const days = [];
+            for (let i = 0; i < 7; i++) { const d = new Date(ws); d.setDate(ws.getDate() + i); days.push(d); const h = document.createElement('div'); h.className = 'wdh'; h.innerHTML = `<div class="wdn2">${d.toLocaleDateString('en-AU', { weekday: 'short' })}</div><div class="wdn ${sd(d, TODAY) ? 'today' : ''}">${d.getDate()}</div>`; g.appendChild(h) }
+            const HRS = Array.from({ length: 13 }, (_, i) => i + 7);
+            const tc = document.createElement('div'); tc.className = 'wtc';
+            HRS.forEach(h => { const ts = document.createElement('div'); ts.className = 'wts'; ts.textContent = h === 12 ? '12 PM' : h < 12 ? `${h} AM` : `${h - 12} PM`; tc.appendChild(ts) });
+            g.appendChild(tc);
+            days.forEach(d => {
+                const col = document.createElement('div'); col.className = 'wdc'; col.style.position = 'relative';
+                HRS.forEach(h => { const r = document.createElement('div'); r.className = 'whr'; r.onclick = () => openApptModalAt(d, h); col.appendChild(r) });
+                abd(d).forEach(ev => {
+                    const sh = ev.start.getHours() + ev.start.getMinutes() / 60, th = sh - 7; if (th < 0 || th > 13) return;
+                    const t = TC[ev.type] || TC.inperson; const el = document.createElement('div'); el.className = 'wev';
+                    el.style.cssText = `top:${th * 50}px;height:${(ev.dur / 60) * 50 - 2}px;background:${t.bg};color:${t.fg};border-left:3px solid ${t.bar}`;
+                    el.innerHTML = `<div style="font-weight:600;font-size:10px">${ev.title}</div><div style="font-size:9px;opacity:.7">${ft(ev.start)}</div>`;
+                    el.onclick = x => { x.stopPropagation(); toast(`📅 ${ev.title} · ${ft(ev.start)}`) }; col.appendChild(el);
+                });
+                g.appendChild(col);
+            });
+        }
+
+        function renderDay() {
+            const d = selD || TODAY;
+            document.getElementById('cmlbl').textContent = d.toLocaleDateString('en-AU', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+            const v = document.getElementById('dvw'); v.innerHTML = '';
+            const HRS = Array.from({ length: 14 }, (_, i) => i + 7);
+            const tc = document.createElement('div'); tc.className = 'dtc';
+            HRS.forEach(h => { const ts = document.createElement('div'); ts.className = 'dts'; ts.textContent = h === 12 ? '12 PM' : h < 12 ? `${h} AM` : `${h - 12} PM`; tc.appendChild(ts) });
+            v.appendChild(tc);
+            const ec = document.createElement('div'); ec.className = 'dec'; ec.style.position = 'relative';
+            HRS.forEach(h => { const r = document.createElement('div'); r.className = 'dhr'; r.onclick = () => openApptModalAt(d, h); ec.appendChild(r) });
+            abd(d).forEach(ev => {
+                const sh = ev.start.getHours() + ev.start.getMinutes() / 60, th = sh - 7; if (th < 0) return;
+                const t = TC[ev.type] || TC.inperson; const el = document.createElement('div'); el.className = 'dev';
+                el.style.cssText = `top:${th * 58}px;height:${(ev.dur / 60) * 58 - 4}px;background:${t.bg};color:${t.fg};border-left:4px solid ${t.bar}`;
+                el.innerHTML = `<div class="devt">${ev.title}</div><div class="devs">${ft(ev.start)} · ${ev.dur} min · ${ev.loc || ''}</div>`;
+                el.onclick = x => { x.stopPropagation(); toast(`📅 ${ev.title} · ${ft(ev.start)} · ${ev.dur} min`) }; ec.appendChild(el);
+            });
+            v.appendChild(ec);
+        }
+
+        function renderCal() { if (cView === 'month') renderMonth(); else if (cView === 'week') renderWeek(); else renderDay() }
+
+        function setView(v, btn) {
+            cView = v;
+            document.querySelectorAll('.cvbtn').forEach(b => b.classList.remove('active')); btn.classList.add('active');
+            document.getElementById('mv').style.display = v === 'month' ? '' : 'none';
+            document.getElementById('wv').style.display = v === 'week' ? '' : 'none';
+            document.getElementById('dv').style.display = v === 'day' ? '' : 'none';
+            renderCal();
+        }
+
+        function calNav(dir) {
+            if (cView === 'month') { cM += dir; if (cM > 11) { cM = 0; cY++ } if (cM < 0) { cM = 11; cY-- } }
+            else if (cView === 'week') { wkStart.setDate(wkStart.getDate() + dir * 7) }
+            else { const d = selD || TODAY; d.setDate(d.getDate() + dir); selD = new Date(d) }
+            renderCal();
+        }
+
+        function goToday() { cY = TODAY.getFullYear(); cM = TODAY.getMonth(); wkStart = new Date(TODAY); wkStart.setDate(TODAY.getDate() - TODAY.getDay()); selD = new Date(TODAY); renderCal() }
+
+        function showDay(d) {
+            const panel = document.getElementById('cdpanel');
+            document.getElementById('cdtit').textContent = d.toLocaleDateString('en-AU', { weekday: 'long', day: 'numeric', month: 'long' });
+            const list = document.getElementById('cdlist'), ev = abd(d);
+            if (!ev.length) { list.innerHTML = `<div style="padding:12px 0;color:var(--muted);font-size:14px">No appointments this day. <span style="color:var(--red);cursor:pointer" onclick="openApptModalAt(new Date('${d.toISOString()}'),9)">+ Add one</span></div>` }
+            else { list.innerHTML = ev.map(e => { const t = TC[e.type] || TC.inperson; return `<div class="ai" style="border-left:3px solid ${t.bar}"><div class="atm">${ft(e.start)}</div><div><div class="atl">${e.title}</div><div class="asb">${e.loc || ''} · ${e.dur} min</div></div><div class="atg" style="background:${t.bg};color:${t.fg}">${e.type}</div><span style="margin-left:7px;cursor:pointer;color:var(--muted);font-size:14px" onclick="delAppt(${e.id})">🗑</span></div>` }).join('') }
+            panel.style.display = 'block';
+        }
+
+        function delAppt(id) { appts = appts.filter(a => a.id !== id); renderCal(); if (document.getElementById('cdpanel').style.display !== 'none') showDay(selD || TODAY); toast('🗑 Appointment removed') }
+
+        function openApptModal() { document.getElementById('adate').value = TODAY.toISOString().split('T')[0]; document.getElementById('apptmo').classList.add('open') }
+        function openApptModalAt(d, h) { document.getElementById('adate').value = new Date(d).toISOString().split('T')[0]; document.getElementById('atime').value = `${String(h).padStart(2, '0')}:00`; document.getElementById('apptmo').classList.add('open') }
+        function closeApptModal() { document.getElementById('apptmo').classList.remove('open') }
+
+        function saveAppt() {
+            const tit = document.getElementById('atit').value.trim();
+            if (!tit) { toast('⚠️ Please enter a title'); return }
+            const dv = document.getElementById('adate').value;
+            if (!dv) { toast('⚠️ Please select a date'); return }
+            const [y, mo, day] = dv.split('-').map(Number), [h, m] = document.getElementById('atime').value.split(':').map(Number);
+            appts.push({ id: nid++, title: tit, start: new Date(y, mo - 1, day, h, m), dur: parseInt(document.getElementById('adur').value), type: document.getElementById('atype').value, loc: document.getElementById('aloc').value, pt: document.getElementById('apart').value });
+            closeApptModal(); renderCal(); selD = new Date(y, mo - 1, day); showDay(selD); toast('✅ Appointment saved!');
+            ['atit', 'aloc'].forEach(id => document.getElementById(id).value = '');
+        }
+
+        // GOOGLE CAL
+        let gcConn = false;
+        function gcConnect() {
+            if (gcConn) { toast('✅ Already connected to Google Calendar'); return }
+            toast('🔐 Connecting to Google Calendar…');
+            setTimeout(() => {
+                gcConn = true;
+                document.getElementById('gcbanner').style.display = 'flex';
+                const btn = document.getElementById('gcbtn');
+                btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 48 48"><rect x="2" y="2" width="44" height="44" rx="6" fill="#fff"/><text x="24" y="34" text-anchor="middle" font-size="22" fill="#34A853">✓</text></svg> Synced`;
+                btn.style.cssText = 'display:flex;align-items:center;gap:6px;background:#E8EDF8;color:var(--navy);border:1.5px solid #C0CCE8;border-radius:9px;padding:8px 15px;font-size:13px;font-weight:500;cursor:pointer';
+                toast('🎉 Google Calendar connected! Events will sync automatically.');
+            }, 1400);
+        }
+        function gcDisconnect() {
+            gcConn = false; document.getElementById('gcbanner').style.display = 'none';
+            const btn = document.getElementById('gcbtn');
+            btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 48 48" style="flex-shrink:0"><rect x="6" y="6" width="36" height="36" rx="4" fill="#fff" stroke="#D5DAE8" stroke-width="2"/><rect x="6" y="14" width="36" height="4" fill="#4285F4"/><rect x="14" y="6" width="4" height="8" rx="2" fill="#4285F4"/><rect x="30" y="6" width="4" height="8" rx="2" fill="#4285F4"/><text x="24" y="36" text-anchor="middle" font-size="14" font-weight="700" fill="#34A853">G</text></svg> Sync Google`;
+            btn.style.cssText = '';
+            toast('Google Calendar disconnected');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('adate').value = TODAY.toISOString().split('T')[0];
+            renderCal();
+
+            // ── PERSONALISE WITH LOGIN USERNAME ──
+            const raw = localStorage.getItem('at_username') || 'Sarah';
+            // Capitalise first letter, treat "admin" → "Admin" or keep as-is
+            const displayName = raw.charAt(0).toUpperCase() + raw.slice(1);
+            // Initials: up to 2 chars from the username
+            const initials = displayName.slice(0, 2).toUpperCase();
+
+            // Time-aware greeting
+            const hr = new Date().getHours();
+            const greet = hr < 12 ? 'Good morning' : hr < 17 ? 'Good afternoon' : 'Good evening';
+
+            // 1. Welcome banner
+            const wh = document.getElementById('welcome-heading');
+            if (wh) wh.textContent = `${greet}, ${displayName} ☀️`;
+
+            // 2. Sidebar user card
+            const sn = document.getElementById('sidebar-uname');
+            if (sn) sn.textContent = displayName;
+            const sa = document.getElementById('sidebar-ava');
+            if (sa) sa.textContent = initials;
+
+            // 3. Care Team card
+            const tn = document.getElementById('team-uname');
+            if (tn) tn.textContent = displayName;
+            const ta = document.getElementById('team-ava');
+            if (ta) ta.textContent = initials;
+            const tb = document.getElementById('team-msg-btn');
+            if (tb) tb.setAttribute('onclick', `toast('💬 Message sent to ${displayName}')`);
+        });
+    </script>
+</body>
+
+</html>
