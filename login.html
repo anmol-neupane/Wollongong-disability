@@ -370,7 +370,7 @@
             animation-delay: .1s
         }
 
-        /* EMERGENCY */
+        /* EMERGENCY BAR */
         .ebar {
             background: linear-gradient(90deg, var(--red3), var(--red));
             color: #fff;
@@ -1020,7 +1020,6 @@
             color: rgba(255, 255, 255, 0.5);
             letter-spacing: 0.8px;
             text-transform: uppercase;
-
         }
 
         /* MODAL */
@@ -1767,12 +1766,15 @@
 
     <div class="overlay" id="overlay" onclick="closeSB()"></div>
 
+    <!-- FIX 1: Sidebar structure corrected.
+         Previously .nav and .sidebar-foot were nested inside .logo (missing </div> to close .logo).
+         Now .logo, .nav, and .sidebar-foot are all direct children of .sidebar. -->
     <nav class="sidebar" id="sidebar">
         <div class="logo">
             <div class="logo-row">
                 <div class="brand">
                     <div class="brand-row">
-                        <img src="logo.png" class="brand-logo">
+                        <img src="logo.png" class="brand-logo" alt="Wollongong Health logo">
                         <div>
                             <div class="brand-name">Wollongong Health</div>
                             <div class="brand-tag">Disability Support</div>
@@ -1780,47 +1782,50 @@
                     </div>
                 </div>
             </div>
-            <div class="nav">
-                <div class="nav-lbl">Overview</div>
-                <div class="nav-item active" onclick="go('dashboard',this)"><span class="ni"></span> Dashboard</div>
-                <div class="nav-item" onclick="go('notifications',this)"><span class="ni"></span> Notifications <span
-                        class="badge">3</span></div>
-                <div class="nav-item" onclick="go('schedule',this)"><span class="ni"></span> My Schedule</div>
-                <div class="nav-item" onclick="go('messaging',this)"><span class="ni"></span> Messaging <span
-                        class="badge">2</span></div>
-                <div class="nav-lbl" style="margin-top:10px">Work</div>
-                <div class="nav-item" onclick="go('jobboard',this)"><span class="ni"></span> Job Board</div>
-                <div class="nav-item" onclick="go('availability',this)"><span class="ni"></span> Availability</div>
-                <div class="nav-item" onclick="go('shiftnotes',this)"><span class="ni"></span> Shift Notifications</div>
-                <div class="nav-lbl" style="margin-top:10px">My Records</div>
-                <div class="nav-item" onclick="go('forms',this)"><span class="ni"></span> My Forms</div>
-                <div class="nav-item" onclick="go('timesheet',this)"><span class="ni"></span> My Timesheet</div>
-                <div class="nav-item" onclick="go('mydocs',this)"><span class="ni"></span> My Documents</div>
-                <div class="nav-lbl" style="margin-top:10px">Organisation</div>
-                <div class="nav-item" onclick="go('dochub',this)"><span class="ni"></span> Documents Hub</div>
-                <div class="nav-item" onclick="go('plans',this)"><span class="ni"></span> Support Plans <span
-                        class="badge">4</span></div>
-                <div class="nav-item" onclick="go('goals',this)"><span class="ni"></span> Goals &amp; Progress</div>
-                <div class="nav-item" onclick="go('team',this)"><span class="ni"></span> Care Team</div>
-                <div class="nav-item" onclick="go('reports',this)"><span class="ni"></span> Reports</div>
-                <div class="nav-lbl" style="margin-top:10px">System</div>
-                <div class="nav-item" onclick="go('offline',this)"><span class="ni"></span> Offline Settings</div>
-                <div class="nav-item" onclick="go('about',this)"><span class="ni"></span> About</div>
-                <div class="nav-item" onclick="go('settings',this)"><span class="ni">⚙️</span> Settings</div>
-            </div>
-            <div class="sidebar-foot">
-                <div class="user-card">
-                    <div class="ava" id="sidebar-ava">SC</div>
-                    <div>
-                        <div class="uname" id="sidebar-uname">Sarah Chen</div>
-                        <div class="urole">Support Coordinator</div>
-                    </div>
+        </div><!-- end .logo -->
+
+        <div class="nav">
+            <div class="nav-lbl">Overview</div>
+            <div class="nav-item active" onclick="go('dashboard',this)"><span class="ni"></span> Dashboard</div>
+            <div class="nav-item" onclick="go('notifications',this)"><span class="ni"></span> Notifications <span
+                    class="badge">3</span></div>
+            <div class="nav-item" onclick="go('schedule',this)"><span class="ni"></span> My Schedule</div>
+            <div class="nav-item" onclick="go('messaging',this)"><span class="ni"></span> Messaging <span
+                    class="badge">2</span></div>
+            <div class="nav-lbl" style="margin-top:10px">Work</div>
+            <div class="nav-item" onclick="go('jobboard',this)"><span class="ni"></span> Job Board</div>
+            <div class="nav-item" onclick="go('availability',this)"><span class="ni"></span> Availability</div>
+            <div class="nav-item" onclick="go('shiftnotes',this)"><span class="ni"></span> Shift Notifications</div>
+            <div class="nav-lbl" style="margin-top:10px">My Records</div>
+            <div class="nav-item" onclick="go('forms',this)"><span class="ni"></span> My Forms</div>
+            <div class="nav-item" onclick="go('timesheet',this)"><span class="ni"></span> My Timesheet</div>
+            <div class="nav-item" onclick="go('mydocs',this)"><span class="ni"></span> My Documents</div>
+            <div class="nav-lbl" style="margin-top:10px">Organisation</div>
+            <div class="nav-item" onclick="go('dochub',this)"><span class="ni"></span> Documents Hub</div>
+            <div class="nav-item" onclick="go('plans',this)"><span class="ni"></span> Support Plans <span
+                    class="badge">4</span></div>
+            <div class="nav-item" onclick="go('goals',this)"><span class="ni"></span> Goals &amp; Progress</div>
+            <div class="nav-item" onclick="go('team',this)"><span class="ni"></span> Care Team</div>
+            <div class="nav-item" onclick="go('reports',this)"><span class="ni"></span> Reports</div>
+            <div class="nav-lbl" style="margin-top:10px">System</div>
+            <div class="nav-item" onclick="go('offline',this)"><span class="ni"></span> Offline Settings</div>
+            <div class="nav-item" onclick="go('about',this)"><span class="ni"></span> About</div>
+            <div class="nav-item" onclick="go('settings',this)"><span class="ni">⚙️</span> Settings</div>
+        </div><!-- end .nav -->
+
+        <div class="sidebar-foot">
+            <div class="user-card">
+                <div class="ava" id="sidebar-ava">SC</div>
+                <div>
+                    <div class="uname" id="sidebar-uname">Sarah Chen</div>
+                    <div class="urole">Support Coordinator</div>
                 </div>
             </div>
+        </div><!-- end .sidebar-foot -->
+
     </nav>
 
     <main class="main">
-
 
         <div class="topbar">
             <button class="hamburger" onclick="toggleSB()"
@@ -1832,6 +1837,12 @@
                 <button class="btn btn-ico" onclick="toast('📬 You have 3 unread notifications')">🔔</button>
                 <button class="btn btn-p tb-hide" onclick="openPlanModal()">+ Add Plan</button>
             </div>
+        </div>
+
+        <!-- FIX 4: Emergency bar was defined in CSS but never rendered in HTML. Added here. -->
+        <div class="ebar" onclick="toast('🚨 Emergency SOS sent to care team!')">
+            <div class="epulse"></div>
+            <strong>Emergency SOS</strong> — Tap to instantly alert your care team
         </div>
 
         <div class="content">
@@ -2301,15 +2312,15 @@
                                     stroke-width="2" />
                                 <rect x="6" y="14" width="36" height="4" fill="#4285F4" />
                                 <rect x="14" y="6" width="4" height="8" rx="2" fill="#4285F4" />
-                                <rect x="30" y="6" width="4" height="8" rx="2" fill="#4285F4" /><text x="24" y="36"
-                                    text-anchor="middle" font-size="14" font-weight="700" fill="#34A853">G</text>
+                                <rect x="30" y="6" width="4" height="8" rx="2" fill="#4285F4" />
+                                <text x="24" y="36" text-anchor="middle" font-size="14" font-weight="700"
+                                    fill="#34A853">G</text>
                             </svg>
                             Sync Google
                         </button>
                         <button class="btn btn-p" onclick="openApptModal()">+ New</button>
                     </div>
                 </div>
-
                 <div class="gcbanner" id="gcbanner">
                     <svg width="20" height="20" viewBox="0 0 48 48">
                         <rect x="2" y="2" width="44" height="44" rx="6" fill="#fff" />
@@ -2326,7 +2337,6 @@
                         style="background:rgba(255,255,255,.2);color:#fff;font-size:12px;padding:5px 11px"
                         onclick="gcDisconnect()">Disconnect</button>
                 </div>
-
                 <div class="cshell">
                     <div class="chdr">
                         <div style="display:flex;align-items:center;gap:9px">
@@ -2361,7 +2371,6 @@
                         <div class="dvw" id="dvw"></div>
                     </div>
                 </div>
-
                 <div class="cdpanel" id="cdpanel" style="display:none">
                     <div class="ch">
                         <div class="ct" id="cdtit">Events</div><span class="ca"
@@ -2386,8 +2395,8 @@
                                 <div style="font-size:12px;color:var(--muted)">Support Coordinator</div>
                             </div>
                         </div>
-                        <div style="font-size:12px;color:var(--muted)">24 participants · 5 yrs</div><button
-                            class="btn btn-o" id="team-msg-btn" style="font-size:12px;padding:6px 11px"
+                        <div style="font-size:12px;color:var(--muted)">24 participants · 5 yrs</div>
+                        <button class="btn btn-o" id="team-msg-btn" style="font-size:12px;padding:6px 11px"
                             onclick="toast('💬 Message sent')">Message</button>
                     </div>
                     <div class="qc">
@@ -2400,8 +2409,8 @@
                                 <div style="font-size:12px;color:var(--muted)">Occupational Therapist</div>
                             </div>
                         </div>
-                        <div style="font-size:12px;color:var(--muted)">12 participants · 8 yrs</div><button
-                            class="btn btn-o" style="font-size:12px;padding:6px 11px"
+                        <div style="font-size:12px;color:var(--muted)">12 participants · 8 yrs</div>
+                        <button class="btn btn-o" style="font-size:12px;padding:6px 11px"
                             onclick="toast('💬 Message sent to Amy')">Message</button>
                     </div>
                     <div class="qc">
@@ -2414,8 +2423,8 @@
                                 <div style="font-size:12px;color:var(--muted)">Speech Pathologist</div>
                             </div>
                         </div>
-                        <div style="font-size:12px;color:var(--muted)">8 participants · 12 yrs</div><button
-                            class="btn btn-o" style="font-size:12px;padding:6px 11px"
+                        <div style="font-size:12px;color:var(--muted)">8 participants · 12 yrs</div>
+                        <button class="btn btn-o" style="font-size:12px;padding:6px 11px"
                             onclick="toast('💬 Message sent to David')">Message</button>
                     </div>
                 </div>
@@ -2633,9 +2642,9 @@
                     <div class="stl">My Schedule</div>
                     <div style="display:flex;gap:7px;align-items:center;flex-wrap:wrap">
                         <div class="cvtog">
-                            <button class="cvbtn active" id="schvbm" onclick="toast('📅 Month view')">Month</button>
-                            <button class="cvbtn" id="schvbw" onclick="toast('📅 Week view')">Week</button>
-                            <button class="cvbtn" id="schvbd" onclick="toast('📅 Day view')">Day</button>
+                            <button class="cvbtn active" onclick="toast('📅 Month view')">Month</button>
+                            <button class="cvbtn" onclick="toast('📅 Week view')">Week</button>
+                            <button class="cvbtn" onclick="toast('📅 Day view')">Day</button>
                         </div>
                         <button class="btn btn-p" onclick="openApptModal()">+ New Shift</button>
                     </div>
@@ -2826,8 +2835,7 @@
                             <div>
                                 <div class="pn" style="font-size:14px">In-Home Support Worker</div>
                                 <div class="pty">Full-time · Suburb: Randwick</div>
-                            </div>
-                            <span class="ps sa">Open</span>
+                            </div><span class="ps sa">Open</span>
                         </div>
                         <div class="pgs"><span class="gt">Daily Living</span><span class="gt">Personal Care</span><span
                                 class="gt">Mobility</span></div>
@@ -2839,8 +2847,7 @@
                             <div>
                                 <div class="pn" style="font-size:14px">Behaviour Support Practitioner</div>
                                 <div class="pty">Part-time · Remote / Office</div>
-                            </div>
-                            <span class="ps sr">Closing soon</span>
+                            </div><span class="ps sr">Closing soon</span>
                         </div>
                         <div class="pgs"><span class="gt">Autism</span><span class="gt">PBS</span><span
                                 class="gt">Report Writing</span></div>
@@ -2852,8 +2859,7 @@
                             <div>
                                 <div class="pn" style="font-size:14px">Community Access Support</div>
                                 <div class="pty">Casual · Flexible hours</div>
-                            </div>
-                            <span class="ps sa">Open</span>
+                            </div><span class="ps sa">Open</span>
                         </div>
                         <div class="pgs"><span class="gt">Transport</span><span class="gt">Social Skills</span><span
                                 class="gt">Recreation</span></div>
@@ -2865,8 +2871,7 @@
                             <div>
                                 <div class="pn" style="font-size:14px">NDIS Support Coordinator</div>
                                 <div class="pty">Full-time · Sydney CBD</div>
-                            </div>
-                            <span class="ps sa">Open</span>
+                            </div><span class="ps sa">Open</span>
                         </div>
                         <div class="pgs"><span class="gt">NDIS</span><span class="gt">Plan Management</span><span
                                 class="gt">Case Work</span></div>
@@ -2878,8 +2883,7 @@
                             <div>
                                 <div class="pn" style="font-size:14px">Exercise Physiologist</div>
                                 <div class="pty">Part-time · Multiple sites</div>
-                            </div>
-                            <span class="ps sp">Applied</span>
+                            </div><span class="ps sp">Applied</span>
                         </div>
                         <div class="pgs"><span class="gt">Physio</span><span class="gt">Allied Health</span><span
                                 class="gt">Rehab</span></div>
@@ -2891,8 +2895,7 @@
                             <div>
                                 <div class="pn" style="font-size:14px">Early Childhood Support</div>
                                 <div class="pty">Casual · School hours</div>
-                            </div>
-                            <span class="ps sa">Open</span>
+                            </div><span class="ps sa">Open</span>
                         </div>
                         <div class="pgs"><span class="gt">Early Intervention</span><span class="gt">ECEI</span></div>
                         <div style="font-size:12px;color:var(--muted)">Posted 4 days ago · $30–$36/hr</div>
@@ -3184,7 +3187,8 @@
                     <div class="scard">
                         <div class="slbl">Pending Approval</div>
                         <div class="sval">2</div>
-                        <div class="ssub"><span class="sdot" style="background:#C9962E)"></span>Awaiting sign-off</div>
+                        <!-- FIX 2: Malformed inline style background:#C9962E) had a stray closing paren — removed -->
+                        <div class="ssub"><span class="sdot" style="background:#C9962E"></span>Awaiting sign-off</div>
                     </div>
                     <div class="scard">
                         <div class="slbl">Approved This Month</div>
@@ -3507,7 +3511,7 @@
                         <div style="text-align:center;padding:28px 0 20px">
                             <div
                                 style="font-family:'Fraunces',serif;font-size:24px;font-weight:700;color:var(--dark);margin-bottom:4px">
-                                Wollongong Health </div>
+                                Wollongong Health</div>
                             <div style="font-size:13px;color:var(--muted);margin-bottom:16px">Disability Support Hub
                             </div>
                             <div class="gt" style="display:inline-block;margin-bottom:20px">Version 2.4.1 · March 2026
@@ -3579,7 +3583,7 @@
                 </div>
             </div>
 
-        </div>
+        </div><!-- end .content -->
     </main>
 
     <!-- PLAN MODAL -->
@@ -3717,10 +3721,10 @@
             const g = document.getElementById('cgrid'); g.innerHTML = '';
             const fd = new Date(cY, cM, 1).getDay(), dim = new Date(cY, cM + 1, 0).getDate(), pd = new Date(cY, cM, 0).getDate();
             let cells = [];
-            for (let i = fd - 1; i >= 0; i--)cells.push({ d: new Date(cY, cM - 1, pd - i), cur: false });
-            for (let i = 1; i <= dim; i++)cells.push({ d: new Date(cY, cM, i), cur: true });
+            for (let i = fd - 1; i >= 0; i--) cells.push({ d: new Date(cY, cM - 1, pd - i), cur: false });
+            for (let i = 1; i <= dim; i++) cells.push({ d: new Date(cY, cM, i), cur: true });
             const rem = 42 - cells.length;
-            for (let i = 1; i <= rem; i++)cells.push({ d: new Date(cY, cM + 1, i), cur: false });
+            for (let i = 1; i <= rem; i++) cells.push({ d: new Date(cY, cM + 1, i), cur: false });
             cells.forEach(({ d, cur }) => {
                 const c = document.createElement('div'); c.className = 'ccell';
                 if (!cur) c.classList.add('om');
@@ -3859,28 +3863,24 @@
             document.getElementById('adate').value = TODAY.toISOString().split('T')[0];
             renderCal();
 
-            // ── PERSONALISE WITH LOGIN USERNAME ──
+            // FIX 3: Login page never wrote at_username to localStorage, so this always fell back to 'Sarah'.
+            // The login page (index.html) now writes localStorage.setItem('at_username', username) on success.
+            // Here we read it back to personalise the dashboard.
             const raw = localStorage.getItem('at_username') || 'Sarah';
-            // Capitalise first letter, treat "admin" → "Admin" or keep as-is
             const displayName = raw.charAt(0).toUpperCase() + raw.slice(1);
-            // Initials: up to 2 chars from the username
             const initials = displayName.slice(0, 2).toUpperCase();
 
-            // Time-aware greeting
             const hr = new Date().getHours();
             const greet = hr < 12 ? 'Good morning' : hr < 17 ? 'Good afternoon' : 'Good evening';
 
-            // 1. Welcome banner
             const wh = document.getElementById('welcome-heading');
             if (wh) wh.textContent = `${greet}, ${displayName} ☀️`;
 
-            // 2. Sidebar user card
             const sn = document.getElementById('sidebar-uname');
             if (sn) sn.textContent = displayName;
             const sa = document.getElementById('sidebar-ava');
             if (sa) sa.textContent = initials;
 
-            // 3. Care Team card
             const tn = document.getElementById('team-uname');
             if (tn) tn.textContent = displayName;
             const ta = document.getElementById('team-ava');

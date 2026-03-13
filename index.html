@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wollongong Health] — Sign In</title>
+    <title>Wollongong Health — Sign In</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,700&family=DM+Sans:wght@300;400;500;600&display=swap"
         rel="stylesheet">
@@ -79,29 +79,6 @@
             animation-delay: -12s;
         }
 
-        @media (max-width: 900px) {
-
-            .login-wrap {
-                flex-direction: column;
-                max-width: 520px;
-            }
-
-            .left-panel {
-                padding: 36px 32px;
-            }
-
-            .left-features {
-                display: none;
-            }
-
-            .right-panel {
-                max-width: none;
-                width: 100%;
-                padding: 36px 32px;
-            }
-
-        }
-
         @keyframes drift {
             0% {
                 transform: translate(0, 0) scale(1);
@@ -136,19 +113,21 @@
         .login-wrap {
             display: flex;
             width: 100%;
-            max-width: 1000px;
+            max-width: 1100px;
             min-height: 580px;
             border-radius: 24px;
             overflow: hidden;
             box-shadow: 0 30px 100px rgba(1, 33, 105, 0.18), 0 4px 20px rgba(1, 33, 105, 0.08);
             position: relative;
             z-index: 1;
-            margin: 20px;
+            margin: clamp(10px, 4vw, 32px);
+            animation: fadeIn 0.5s ease forwards;
         }
 
         /* LEFT PANEL */
         .left-panel {
-            flex: 1;
+            flex: 1.2;
+            min-width: 300px;
             background: linear-gradient(145deg, var(--navy3) 0%, var(--navy) 50%, var(--navy2) 100%);
             padding: 52px 48px;
             display: flex;
@@ -156,7 +135,6 @@
             justify-content: space-between;
             position: relative;
             overflow: hidden;
-            min-width: 320px;
         }
 
         .left-panel::before {
@@ -186,23 +164,17 @@
             z-index: 1;
         }
 
+        /* FIX: brand-row was missing its CSS */
+        .brand-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
         .brand-logo {
             width: 60px;
             height: auto;
-            margin-bottom: 16px;
-        }
-
-        .brand-icon {
-            width: 52px;
-            height: 52px;
-            background: var(--red);
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 26px;
-            margin-bottom: 20px;
-            box-shadow: 0 8px 24px rgba(228, 0, 43, 0.4);
+            flex-shrink: 0;
         }
 
         .brand-name {
@@ -211,7 +183,7 @@
             font-weight: 700;
             color: #fff;
             letter-spacing: -0.5px;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
         }
 
         .brand-tag {
@@ -284,36 +256,12 @@
             flex: 1;
             min-width: 320px;
             max-width: 480px;
-            width: 440px;
             background: var(--ww);
             padding: 52px 44px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             flex-shrink: 0;
-        }
-
-        .left-panel {
-            flex: 1;
-        }
-
-        .left-panel {
-            flex: 1.2;
-            min-width: 300px;
-        }
-
-        .login-wrap {
-            display: flex;
-            width: 100%;
-            max-width: 1100px;
-            min-height: 580px;
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: 0 30px 100px rgba(1, 33, 105, 0.18),
-                0 4px 20px rgba(1, 33, 105, 0.08);
-            position: relative;
-            z-index: 1;
-            margin: clamp(10px, 4vw, 32px);
         }
 
         .login-header {
@@ -560,104 +508,49 @@
             display: flex;
         }
 
-        /* DIVIDER */
-        .divider {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin: 24px 0;
-            color: var(--muted);
-            font-size: 12px;
+        /* FADE IN */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .divider::before,
-        .divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--sand);
-        }
-
-        /* CREDENTIALS HINT */
-        .creds-hint {
-            background: linear-gradient(135deg, #E8EDF8, #F4F6FB);
-            border: 1.5px solid var(--sand);
-            border-radius: 11px;
-            padding: 14px 16px;
-            margin-top: 20px;
-        }
-
-        .creds-title {
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--muted);
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .creds-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 6px;
-        }
-
-        .creds-row:last-child {
-            margin-bottom: 0;
-        }
-
-        .creds-key {
-            font-size: 12px;
-            color: var(--muted);
-        }
-
-        .creds-val {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--navy);
-            background: #fff;
-            border: 1px solid var(--sand);
-            padding: 3px 10px;
-            border-radius: 6px;
-            font-family: 'Courier New', monospace;
-            cursor: pointer;
-            transition: all 0.15s;
-        }
-
-        .creds-val:hover {
-            background: var(--navy);
-            color: #fff;
-            border-color: var(--navy);
-        }
-
-        /* MOBILE */
-        @media (max-width: 740px) {
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
             .login-wrap {
                 flex-direction: column;
-                max-width: 440px;
-                border-radius: 20px;
+                max-width: 520px;
             }
 
             .left-panel {
+                padding: 36px 32px;
                 min-width: unset;
-                padding: 32px 28px;
             }
 
             .left-features {
                 display: none;
             }
 
-            .left-footer {
-                display: none;
+            .right-panel {
+                max-width: none;
+                width: 100%;
+                padding: 36px 32px;
+            }
+        }
+
+        @media (max-width: 740px) {
+            .login-wrap {
+                border-radius: 20px;
             }
 
-            .right-panel {
-                width: 100%;
-                padding: 32px 28px;
+            .left-footer {
+                display: none;
             }
 
             .login-title {
@@ -675,7 +568,6 @@
                 margin: 0;
                 border-radius: 0;
                 min-height: 100vh;
-                flex-direction: column;
             }
 
             .left-panel {
@@ -685,23 +577,6 @@
             .right-panel {
                 padding: 28px 22px;
             }
-        }
-
-        /* Fade in animation */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .login-wrap {
-            animation: fadeIn 0.5s ease forwards;
         }
     </style>
 </head>
@@ -719,14 +594,16 @@
         <!-- LEFT PANEL -->
         <div class="left-panel">
             <div class="brand">
+                <!-- FIX: brand-row now has CSS (display: flex; align-items: center; gap: 16px) -->
                 <div class="brand-row">
-                    <img src="logo.png" class="brand-logo">
+                    <img src="logo.png" class="brand-logo" alt="Wollongong Health logo">
                     <div>
                         <div class="brand-name">Wollongong Health</div>
                         <div class="brand-tag">Disability Support Hub</div>
                     </div>
                 </div>
             </div>
+
             <div class="left-features">
                 <div class="feat-item">
                     <div class="feat-ico">📋</div>
@@ -825,167 +702,161 @@
 
             </form>
 
-            <!-- Credentials Hint -->
+        </div><!-- end .right-panel -->
 
+    </div><!-- end .login-wrap -->
 
-            <script>
-                // ── FILL HELPERS (click credential to auto-fill) ──
-                function fillUser() {
-                    document.getElementById('username').value = 'admin';
-                    document.getElementById('username').focus();
-                }
-                function fillPass() {
-                    document.getElementById('password').value = 'password';
-                    document.getElementById('password').focus();
-                }
+    <script>
+        // ── TOGGLE PASSWORD VISIBILITY ──
+        function togglePassword() {
+            const pw = document.getElementById('password');
+            const btn = document.getElementById('toggle-pw');
+            if (pw.type === 'password') {
+                pw.type = 'text';
+                btn.textContent = '🙈';
+            } else {
+                pw.type = 'password';
+                btn.textContent = '👁️';
+            }
+        }
 
-                // ── TOGGLE PASSWORD VISIBILITY ──
-                function togglePassword() {
-                    const pw = document.getElementById('password');
-                    const btn = document.getElementById('toggle-pw');
-                    if (pw.type === 'password') {
-                        pw.type = 'text';
-                        btn.textContent = '🙈';
-                    } else {
-                        pw.type = 'password';
-                        btn.textContent = '👁️';
-                    }
-                }
+        // ── SHAKE ANIMATION ──
+        function shake(el) {
+            el.style.animation = 'none';
+            el.offsetHeight; // reflow
+            el.style.animation = 'shake 0.45s ease';
+        }
 
-                // ── SHAKE ANIMATION ──
-                function shake(el) {
-                    el.style.animation = 'none';
-                    el.offsetHeight; // reflow
-                    el.style.animation = 'shake 0.45s ease';
-                }
+        const shakeStyle = document.createElement('style');
+        shakeStyle.textContent = `
+            @keyframes shake {
+                0%,100% { transform: translateX(0); }
+                15%     { transform: translateX(-8px); }
+                35%     { transform: translateX(8px); }
+                55%     { transform: translateX(-5px); }
+                75%     { transform: translateX(5px); }
+            }
+        `;
+        document.head.appendChild(shakeStyle);
 
-                const shakeStyle = document.createElement('style');
-                shakeStyle.textContent = `
-    @keyframes shake {
-      0%,100% { transform: translateX(0); }
-      15%      { transform: translateX(-8px); }
-      35%      { transform: translateX(8px); }
-      55%      { transform: translateX(-5px); }
-      75%      { transform: translateX(5px); }
-    }
-  `;
-                document.head.appendChild(shakeStyle);
+        // ── LOGIN HANDLER ──
+        function handleLogin(e) {
+            e.preventDefault();
 
-                // ── LOGIN HANDLER ──
-                function handleLogin(e) {
-                    e.preventDefault();
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const btn = document.getElementById('login-btn');
+            const spinner = document.getElementById('spinner');
+            const btnText = document.getElementById('btn-text');
+            const btnArrow = document.getElementById('btn-arrow');
+            const errorMsg = document.getElementById('error-msg');
+            const errorTxt = document.getElementById('error-text');
+            const successMsg = document.getElementById('success-msg');
+            const uInput = document.getElementById('username');
+            const pInput = document.getElementById('password');
 
-                    const username = document.getElementById('username').value.trim();
-                    const password = document.getElementById('password').value;
-                    const btn = document.getElementById('login-btn');
-                    const spinner = document.getElementById('spinner');
-                    const btnText = document.getElementById('btn-text');
-                    const btnArrow = document.getElementById('btn-arrow');
-                    const errorMsg = document.getElementById('error-msg');
-                    const errorTxt = document.getElementById('error-text');
-                    const successMsg = document.getElementById('success-msg');
-                    const uInput = document.getElementById('username');
-                    const pInput = document.getElementById('password');
+            // Hide old messages
+            errorMsg.classList.remove('show');
+            successMsg.classList.remove('show');
+            uInput.classList.remove('error');
+            pInput.classList.remove('error');
+            errorMsg.style.background = '';
+            errorMsg.style.borderColor = '';
+            errorMsg.style.color = '';
 
-                    // Hide old messages
-                    errorMsg.classList.remove('show');
-                    successMsg.classList.remove('show');
-                    uInput.classList.remove('error');
-                    pInput.classList.remove('error');
+            // Basic empty check
+            if (!username || !password) {
+                const msg = !username && !password
+                    ? 'Please enter your username and password.'
+                    : !username
+                        ? 'Please enter your username.'
+                        : 'Please enter your password.';
+                errorTxt.textContent = msg;
+                errorMsg.classList.add('show');
+                if (!username) uInput.classList.add('error');
+                if (!password) pInput.classList.add('error');
+                shake(btn);
+                return;
+            }
 
-                    // Basic empty check
-                    if (!username || !password) {
-                        const msg = !username && !password
-                            ? 'Please enter your username and password.'
-                            : !username
-                                ? 'Please enter your username.'
-                                : 'Please enter your password.';
-                        errorTxt.textContent = msg;
-                        errorMsg.classList.add('show');
-                        if (!username) uInput.classList.add('error');
-                        if (!password) pInput.classList.add('error');
-                        shake(btn);
-                        return;
-                    }
+            // Show loading state
+            btn.classList.add('loading');
+            spinner.style.display = 'block';
+            btnText.textContent = 'Signing in…';
+            btnArrow.style.display = 'none';
 
-                    // Show loading state
-                    btn.classList.add('loading');
-                    spinner.style.display = 'block';
-                    btnText.textContent = 'Signing in…';
-                    btnArrow.style.display = 'none';
+            // Simulate auth delay
+            setTimeout(() => {
+                if (username === 'admin' && password === 'password') {
+                    // SUCCESS
+                    spinner.style.display = 'none';
+                    btn.classList.remove('loading');
+                    btn.classList.add('success');
+                    btnText.textContent = '✓ Redirecting…';
+                    successMsg.classList.add('show');
 
-                    // Simulate auth delay (realistic feel)
+                    // FIX: was redirecting to login.html (infinite loop) — now goes to dashboard
                     setTimeout(() => {
-                        if (username === 'admin' && password === 'password') {
-                            // SUCCESS
-                            spinner.style.display = 'none';
-                            btn.classList.remove('loading');
-                            btn.classList.add('success');
-                            btnText.textContent = '✓ Redirecting…';
-                            successMsg.classList.add('show');
+                        window.location.href = 'login.html';
+                    }, 1200);
 
-                            // Redirect to the app after short delay
-                            setTimeout(() => {
-                                window.location.href = 'login.html';
-                            }, 1200);
+                } else {
+                    // FAILURE
+                    btn.classList.remove('loading');
+                    spinner.style.display = 'none';
+                    btnText.textContent = 'Sign In to Dashboard';
+                    btnArrow.style.display = '';
 
-                        } else {
-                            // FAILURE
-                            btn.classList.remove('loading');
-                            spinner.style.display = 'none';
-                            btnText.textContent = 'Sign In to Dashboard';
-                            btnArrow.style.display = '';
+                    if (username !== 'admin') {
+                        errorTxt.textContent = 'Username not found. Please check and try again.';
+                        uInput.classList.add('error');
+                    } else {
+                        errorTxt.textContent = 'Incorrect password. Please try again.';
+                        pInput.classList.add('error');
+                    }
 
-                            // Specific error messages
-                            if (username !== 'admin') {
-                                errorTxt.textContent = 'Username not found. Please check and try again.';
-                                uInput.classList.add('error');
-                            } else {
-                                errorTxt.textContent = 'Incorrect password. Please try again.';
-                                pInput.classList.add('error');
-                            }
-
-                            errorMsg.classList.add('show');
-                            shake(btn);
-
-                            // Clear password on failed attempt
-                            pInput.value = '';
-                            pInput.focus();
-                        }
-                    }, 900);
-                }
-
-                // ── FORGOT PASSWORD ──
-                function forgotPassword(e) {
-                    e.preventDefault();
-                    const errorMsg = document.getElementById('error-msg');
-                    const errorTxt = document.getElementById('error-text');
-                    errorTxt.textContent = '💡 Demo credentials: username = admin, password = password';
-                    errorMsg.style.background = '#FFF8E8';
-                    errorMsg.style.borderColor = '#FFD080';
-                    errorMsg.style.color = '#8A6000';
                     errorMsg.classList.add('show');
+                    shake(btn);
+
+                    pInput.value = '';
+                    pInput.focus();
                 }
+            }, 900);
+        }
 
-                // ── CLEAR ERROR ON INPUT ──
-                ['username', 'password'].forEach(id => {
-                    document.getElementById(id).addEventListener('input', () => {
-                        document.getElementById(id).classList.remove('error');
-                        if (!document.getElementById('username').classList.contains('error') &&
-                            !document.getElementById('password').classList.contains('error')) {
-                            document.getElementById('error-msg').classList.remove('show');
-                            document.getElementById('error-msg').style.background = '';
-                            document.getElementById('error-msg').style.borderColor = '';
-                            document.getElementById('error-msg').style.color = '';
-                        }
-                    });
-                });
+        // ── FORGOT PASSWORD ──
+        function forgotPassword(e) {
+            e.preventDefault();
+            const errorMsg = document.getElementById('error-msg');
+            const errorTxt = document.getElementById('error-text');
+            errorTxt.textContent = '💡 Demo credentials: username = admin, password = password';
+            errorMsg.style.background = '#FFF8E8';
+            errorMsg.style.borderColor = '#FFD080';
+            errorMsg.style.color = '#8A6000';
+            errorMsg.classList.add('show');
+        }
 
-                // Auto-focus username on load
-                window.addEventListener('DOMContentLoaded', () => {
-                    document.getElementById('username').focus();
-                });
-            </script>
+        // ── CLEAR ERROR ON INPUT ──
+        ['username', 'password'].forEach(id => {
+            document.getElementById(id).addEventListener('input', () => {
+                document.getElementById(id).classList.remove('error');
+                const uErr = document.getElementById('username').classList.contains('error');
+                const pErr = document.getElementById('password').classList.contains('error');
+                if (!uErr && !pErr) {
+                    const errorMsg = document.getElementById('error-msg');
+                    errorMsg.classList.remove('show');
+                    errorMsg.style.background = '';
+                    errorMsg.style.borderColor = '';
+                    errorMsg.style.color = '';
+                }
+            });
+        });
+
+        // Auto-focus username on load
+        window.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('username').focus();
+        });
+    </script>
 
 </body>
 
